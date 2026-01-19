@@ -2,8 +2,10 @@ package github.com_1009project.abstractEngine;
 
 import java.util.ArrayList;
 
+//https://hypersphere.blog/blog/quad-trees/ for future optimization
+
 public class CollisionManager {
-    public void update(ArrayList<CollidableEntity> entities) {
+    public void update(ArrayList<CollidableEntity> entities) { // naive solution for collision detection
         for (int i = 0; i < entities.size(); i++) { // Iterate through all entities
             CollidableEntity entityA = entities.get(i);
 
