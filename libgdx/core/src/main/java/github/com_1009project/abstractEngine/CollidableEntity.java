@@ -33,5 +33,5 @@ public abstract class CollidableEntity extends Entity {
 
     public abstract void updateMovement(float deltaTime); // keep it abstract for subclasses to implement their own movement logic
 
-    public abstract void onCollision(CollidableEntity other); // to handle collision with another CollidableEntity
+    public abstract void onCollision(CollidableEntity collidedEntity); // to handle collision with another CollidableEntity
 }
