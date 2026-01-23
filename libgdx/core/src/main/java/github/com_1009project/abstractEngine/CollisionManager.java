@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //https://hypersphere.blog/blog/quad-trees/ for future optimization
 
 public class CollisionManager {
-    public void update(ArrayList<CollidableEntity> entities) { // naive solution for collision detection
+    public void updateCollision(ArrayList<CollidableEntity> entities) { // naive solution for collision detection
         for (int i = 0; i < entities.size(); i++) { // Iterate through all entities
             CollidableEntity entityA = entities.get(i);
 

@@ -11,6 +11,7 @@ public abstract class Entity {
     protected Vector2 size; // Size of the entity
     protected float rotation; // Rotation angle of the entity
     protected Vector2 previousPosition; // Previous position for collision
+    protected boolean active; // Active state of the entity
 
     public Entity() { // Constructor to initialize the entity
         this.id = UUID.randomUUID().toString(); // Generate a unique ID
@@ -18,6 +19,7 @@ public abstract class Entity {
         this.size = new Vector2(1, 1); // Default size
         this.rotation = 0; // Default rotation
         this.previousPosition = new Vector2(0, 0); // Initialize previous position
+        this.active = true; // Entity is active by default
     }
 
     public abstract void render(SpriteBatch batch); // Abstract method to render the entity
@@ -54,5 +56,13 @@ public abstract class Entity {
 
     public Vector2 getPreviousPosition() {
         return previousPosition;
+    }
+
+    public boolean isActive() { // Check if the entity is active
+        return active;
+    }
+
+    public void setActive(boolean active) { // Setter for the active state
+        this.active = false;
     }
 }

@@ -8,7 +8,7 @@ public abstract class CollidableEntity extends Entity {
 
     // Constructor to initialize the CollidableEntity with position and size
     public CollidableEntity(float x, float y, float width, float height) {
-        super();
+        super(); // sets default values from Entity
         this.position.set(x, y);
         this.size.set(width, height);
         this.bounds = new Rectangle(x, y, width, height);
@@ -27,12 +27,11 @@ public abstract class CollidableEntity extends Entity {
     @Override
     public void update(float deltaTime) {
         this.previousPosition.set(this.position.x, this.position.y); // Store previous position
-        updateMotion(deltaTime); // Update the entity's motion
+        updateMovement(deltaTime); // Update the entity's motion
         updateBounds(); // Update the bounding rectangle
     }
 
-    public abstract void updateMotion(float deltaTime); // Abstract method to update the entity's motion
+    public abstract void updateMovement(float deltaTime); // keep it abstract for subclasses to implement their own movement logic
 
-    public abstract void onCollision(CollidableEntity other); // Abstract method to handle collision with another
-                                                              // CollidableEntity
+    public abstract void onCollision(CollidableEntity other); // to handle collision with another CollidableEntity
 }
