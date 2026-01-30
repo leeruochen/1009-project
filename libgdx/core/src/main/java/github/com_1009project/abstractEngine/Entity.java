@@ -4,27 +4,64 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Entity {
-    // Properties, protected fields to be used by subclasses
+    // properties fields to be used by subclasses
     private static int idCounter = 0;
-    protected int id; // Unique identifier for the entity
-    protected Vector2 position; // Position of the entity in the logic
-    protected Vector2 size; // Size of the entity
-    protected float rotation; // Rotation angle of the entity
-    protected Vector2 previousPosition; // Previous position for collision
-    protected boolean active; // Active state of the entity
+    protected int id; 
+    protected Vector2 position;
+    protected Vector2 size;
+    protected float rotation; 
+    protected Vector2 previousPosition;
+    protected boolean active;
+    protected CollisionComponent collisionComponent;
 
-    public Entity() { // Constructor to initialize the entity
-        this.id = idCounter++; // Generate a unique ID
-        this.position = new Vector2(0, 0); // Default position at origin
-        this.size = new Vector2(1, 1); // Default size
-        this.rotation = 0; // Default rotation
-        this.previousPosition = new Vector2(0, 0); // Initialize previous position
-        this.active = true; // Entity is active by default
+    public Entity() { // constructor to initialize the entity with defaults
+        this.id = idCounter++; // id's are sequentially assigned
+        this.position = new Vector2(0, 0);
+        this.size = new Vector2(1, 1); 
+        this.rotation = 0;
+        this.previousPosition = new Vector2(0, 0); 
+        this.active = true; 
+        this.collisionComponent = null; 
     }
 
-    public abstract void render(SpriteBatch batch); // Abstract method to render the entity
+    // to render the entity
+    public abstract void render(SpriteBatch batch);
+    // to update the entity's movement
+    public abstract void updateMovement(float deltaTime);
 
-    public abstract void update(float deltaTime); // Abstract method to update the entity's state
+    // this will be called every frame to update the entity
+    public void update(float deltaTime){
+        this.previousPosition.set(this.position.x, this.position.y); // Store previous position
+        updateMovement(deltaTime); // Update the entity's movement
+        
+        // if entity is collidable, update its bounds
+        if (this.collisionComponent != null) {
+            this.collisionComponent.updateBounds(this.position);
+        }
+    }
+
+    protected void createCollisionComponent(float width, float height) { 
+        // entities can call this in their constructor to make it collidable
+        this.collisionComponent = new CollisionComponent(position.x, position.y, width, height);
+    }
+
+    public void setCollisionActive(boolean active) {
+        // Enable or disable collision detection for this entity
+        if (this.collisionComponent != null) {
+            this.collisionComponent.setActive(active);
+        }
+    }
+
+    public boolean isCollidable() { 
+        // check if entity is collidable and active
+        return this.collisionComponent != null && this.collisionComponent.isActive();
+    }
+
+    public CollisionComponent getCollisionComponent() { // Getter for the collision component
+        return this.collisionComponent;
+    }
+
+    public void onCollision(Entity collidedEntity){} // classes to override this if they want to handle collision
 
     public void setPosition(float x, float y) { // Setter for the position of the entity
         this.position.set(x, y);
@@ -63,6 +100,6 @@ public abstract class Entity {
     }
 
     public void setActive(boolean active) { // Setter for the active state
-        this.active = false;
+        this.active = active;
     }
 }
