@@ -14,14 +14,6 @@ public class EntityLayer extends Layer {
         // waiting for entity manager implementation
     }
 
-    public void addEntity(Entity entity) {
-        
-    }
-
-    public void removeEntity(int id) {
-        
-    }
-
     @Override
     public void update(float deltaTime) {
         
@@ -36,5 +28,9 @@ public class EntityLayer extends Layer {
     public void dispose() {
         
     }
+
+    // public EntityManager getEntityManager() {
+    //     return entityManager;
+    // }
     
 }
