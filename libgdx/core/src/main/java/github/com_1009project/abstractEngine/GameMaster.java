@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 
@@ -20,7 +19,6 @@ public class GameMaster extends ApplicationAdapter{
 
     // camera properties
     private int width, height;
-    private Vector3 cameraPosition = new Vector3();
 
     private ArrayList<Entity> entities;
 
@@ -39,6 +37,12 @@ public class GameMaster extends ApplicationAdapter{
 
         // set up camera
         camera = new CameraManager(width, height);
+
+        // example of creating an entity and making it the target of the camera
+        // Entity player = new PlayerEntity(100, 100, 32, 32, rm);
+        // entities.add(player);
+        // camera.setTarget(player);
+        // this makes the camera follow the player entity
     }
 
     // our main gameplay/simulation loop
@@ -61,7 +65,7 @@ public class GameMaster extends ApplicationAdapter{
         cm.updateCollision(entities);
 
         // update camera position
-        camera.cameraUpdate(deltaTime, cameraPosition);
+        camera.cameraUpdate(deltaTime);
         // batch will render entities according to cameraPosition
         batch.setProjectionMatrix(camera.camera.combined);
 
