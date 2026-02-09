@@ -1,9 +1,6 @@
 package github.com_1009project.lwjgl3;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class UILayer extends Layer {
@@ -32,7 +29,7 @@ public class UILayer extends Layer {
         stage.addActor(actor);
     }
     // optional can remove if not needed
-    public Stage getUIManager() {
+    public Stage getStage() {
         return stage;
     }
 }

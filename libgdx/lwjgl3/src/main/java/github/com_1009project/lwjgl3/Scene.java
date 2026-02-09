@@ -29,7 +29,7 @@ public class Scene {
         // called when scene becomes active
         for (Layer layer : layers) {
             if (layer instanceof UILayer) {
-                Gdx.input.setInputProcessor(((UILayer) layer).getUIManager().getStage());
+                Gdx.input.setInputProcessor(((UILayer) layer).getStage());
             }
         }
     }
