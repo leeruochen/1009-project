@@ -1,28 +1,38 @@
 package github.com_1009project.lwjgl3;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class UILayer extends Layer {
-    private UIManager uiManager;
+    private Stage stage;
 
     public UILayer() {
-        uiManager = new UIManager();
+        new Stage(new ScreenViewport());
     }
 
     @Override
     public void update(float deltaTime) {
-        uiManager.update(deltaTime);
+        stage.act(deltaTime);
     }
 
     @Override
     public void render() {
-        //i dont think this is needed
+       stage.draw();
     }
 
     @Override
     public void dispose() {
-        uiManager.dispose();
+        stage.dispose();
+    }
+
+    public void addActor(Actor actor){
+        stage.addActor(actor);
     }
     // optional can remove if not needed
-    public UIManager getUIManager() {
-        return uiManager;
+    public Stage getUIManager() {
+        return stage;
     }
 }
