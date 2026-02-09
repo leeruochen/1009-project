@@ -13,6 +13,10 @@ public class CameraManager {
     private float shakeIntensity = 0f;
     private float shakeDuration = 0f;
 
+    private float worldWidth;
+    private float worldHeight;
+    private boolean boundsActive = false;
+
     public CameraManager(int width, int height) {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
@@ -20,6 +24,12 @@ public class CameraManager {
 
     public void setTarget(Entity target) {
         this.target = target;
+    }
+
+    public void setBounds(float worldWidth, float worldHeight) {
+        this.worldWidth = worldWidth;
+        this.worldHeight = worldHeight;
+        this.boundsActive = true;
     }
 
     public void cameraUpdate(float delta) {
@@ -40,10 +50,23 @@ public class CameraManager {
             position.x += shakeX;
             position.y += shakeY;
 
+            // duration decays over time
             shakeDuration -= delta;
             if (shakeDuration <= 0) {
                 shakeIntensity = 0f;
             }
+        }
+
+        if (boundsActive) {
+            // clamp camera position to world bounds
+            // viewportWidth and viewportHeight are the size of the camera view
+            float halfWidth = camera.viewportWidth / 2;
+            float halfHeight = camera.viewportHeight / 2;
+
+            // clamp forces position x and y to be within the world boundaries
+            // ensuring the camera view does not go outside the world
+            position.x = MathUtils.clamp(position.x, halfWidth, worldWidth - halfWidth);
+            position.y = MathUtils.clamp(position.y, halfHeight, worldHeight - halfHeight);
         }
 
         // calls OrthographicCamera's update to apply changes
