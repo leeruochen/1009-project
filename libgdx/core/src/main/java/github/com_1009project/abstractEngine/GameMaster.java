@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+
 import java.util.ArrayList;
 
 public class GameMaster extends ApplicationAdapter{
@@ -13,9 +15,19 @@ public class GameMaster extends ApplicationAdapter{
     // private UIManager um;
     private CollisionManager cm;
     private ResourceManager rm;
+    private CameraManager camera;
     private SpriteBatch batch;
 
+    // camera properties
+    private int width, height;
+    private Vector3 cameraPosition = new Vector3();
+
     private ArrayList<Entity> entities;
+
+    public GameMaster(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 
     // this is our set up, to initialize our managers and variables
     @Override
@@ -24,6 +36,9 @@ public class GameMaster extends ApplicationAdapter{
         rm = new ResourceManager();
         batch = new SpriteBatch();
         entities = new ArrayList<>();
+
+        // set up camera
+        camera = new CameraManager(width, height);
     }
 
     // our main gameplay/simulation loop
@@ -39,15 +54,20 @@ public class GameMaster extends ApplicationAdapter{
 
         // update all entities
         for (Entity e : entities) {
-                e.update(deltaTime);
+            e.update(deltaTime);
         }
 
         // update collisions
         cm.updateCollision(entities);
 
+        // update camera position
+        camera.cameraUpdate(deltaTime, cameraPosition);
+        // batch will render entities according to cameraPosition
+        batch.setProjectionMatrix(camera.camera.combined);
+
         // render all entities
         for (Entity e : entities) {
-                e.render(batch);
+            e.render(batch);
         }
     }
 
