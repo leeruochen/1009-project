@@ -72,49 +72,26 @@ public abstract class Entity {
         return this.collisionComponent != null && this.collisionComponent.isActive();
     }
 
-    public CollisionComponent getCollisionComponent() { // Getter for the collision component
-        return this.collisionComponent;
-    }
-
     public void onCollision(Entity collidedEntity){} // classes to override this if they want to handle collision
 
-    public void setPosition(float x, float y) { // Setter for the position of the entity
-        this.position.set(x, y);
-    }
-
-    public Vector2 getPosition() { // Getter for the position
-        return position;
-    }
-
-    public void setSize(float width, float height) { // Setter for the size of the entity
-        this.size.set(width, height);
-    }
-
-    public Vector2 getSize() { // Getter for the size
-        return size;
-    }
-
-    public void setRotation(float rotation) { // Setter for the rotation of the entity
-        this.rotation = rotation;
-    }
-
-    public float getRotation() { // Getter for the rotation
-        return rotation;
-    }
-
-    public int getId() { // Getter for the entity ID
-        return id;
-    }
-
-    public Vector2 getPreviousPosition() {
-        return previousPosition;
-    }
-
-    public boolean isActive() { // Check if the entity is active
-        return active;
-    }
-
-    public void setActive(boolean active) { // Setter for the active state
-        this.active = active;
-    }
+    // Getters and Setters
+    public CollisionComponent getCollisionComponent() {return this.collisionComponent;}
+    public void setPosition(float x, float y) {this.position.set(x, y);}
+    public Vector2 getPosition() { return position;}
+    public void setSize(float width, float height) {this.size.set(width, height);}
+    public Vector2 getSize() { return size;}
+    public void setRotation(float rotation) {this.rotation = rotation;}
+    public float getRotation() {return rotation;}
+    public int getId() {return id;}
+    public Vector2 getPreviousPosition() {return previousPosition;}
+    public Vector2 getVelocity() { return velocity; }
+    public void setVelocity(Vector2 velocity) { this.velocity = velocity; }
+    public Vector2 getAcceleration() { return acceleration; }
+    public void setAcceleration(Vector2 acceleration) { this.acceleration = acceleration; }
+    public float getSpeed() { return speed; }
+    public void setSpeed(float speed) { this.speed = speed; }
+    public float getFriction() { return friction; }
+    public void setFriction(float friction) { this.friction = friction;}
+    public boolean isActive() { return active;}
+    public void setActive(boolean active) { this.active = active;}
 }

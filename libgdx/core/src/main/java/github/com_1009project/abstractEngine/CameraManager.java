@@ -35,8 +35,8 @@ public class CameraManager {
 
     public void cameraUpdate(float delta) {
         // get coordinates of the target entity
-        float targetX = target.position.x + target.size.x / 2;
-        float targetY = target.position.y + target.size.y / 2;
+        float targetX = target.getPosition().x + target.getSize().x / 2;
+        float targetY = target.getPosition().y + target.getSize().y / 2;
 
         // move camera towards the target position
         Vector3 position = camera.position;
