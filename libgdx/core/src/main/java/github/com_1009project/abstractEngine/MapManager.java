@@ -5,12 +5,13 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Disposable;
 import java.util.ArrayList;
+//https://libgdx.com/wiki/graphics/2d/tile-maps
 
-public class MapManager {
+public class MapManager implements Disposable {
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -25,9 +26,9 @@ public class MapManager {
         this.map_scale = scale;
     }
 
-    public void loadMap(String filePath, ArrayList<Entity> entities) {
-        // load map based on file path
-        map = new TmxMapLoader().load(filePath);
+    public void loadMap(TiledMap map) {
+        // load map given
+        this.map = map;
 
         // OrthogonalTiledMapRenderer renders top-down maps
         renderer = new OrthogonalTiledMapRenderer(map, map_scale);

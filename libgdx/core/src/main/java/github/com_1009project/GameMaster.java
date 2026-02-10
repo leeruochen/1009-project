@@ -10,7 +10,7 @@ import github.com_1009project.abstractEngine.CollisionManager;
 import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.MapManager;
 import github.com_1009project.abstractEngine.ResourceManager;
-import github.com_1009project.abstractEngine.CollisionBox;
+import github.com_1009project.abstractEngine.testEntity;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,7 @@ public class GameMaster extends ApplicationAdapter{
     private CameraManager camera;
     private MapManager mapManager;
     private SpriteBatch batch;
+    private testEntity player;
 
     // camera properties
     private int width, height;
@@ -48,16 +49,21 @@ public class GameMaster extends ApplicationAdapter{
         camera = new CameraManager(width, height);
         camera.setBounds(4000, 4000);
 
+        // load assets
+        loadAssets();
+        rm.update();
+        rm.getManager().finishLoading();
+
         // set up the map
         // scale the map if needed, if textures look small
         // load the map from file
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
         mapManager.setScale(4.0f); 
-        mapManager.loadMap("maps/test.tmx", entities); 
+        mapManager.loadMap(rm.getTiledMap("maps/test.tmx"));
         mapManager.parseCollisionLayer(entities, "Collision");
 
         // example of creating an entity and making it the target of the camera
-        Entity player = new CollisionBox(2000, 2000, 32, 32);
+        player = new testEntity(200, 200, 50, 50, rm.getTexture("imgs/boy_down_1.png"));
         entities.add(player);
         camera.setTarget(player);
         // this makes the camera follow the player entity
@@ -86,11 +92,24 @@ public class GameMaster extends ApplicationAdapter{
         // render entities and map
         mapManager.render(camera.camera);
 
+        if (player.hasCollided) {
+            camera.shake(2f, 0.2f);
+            player.hasCollided = false;
+        }
+
         // batch will render entities according to cameraPosition
         batch.setProjectionMatrix(camera.camera.combined);
         batch.begin();
         for (Entity e : entities) {e.render(batch);}
         batch.end();
+    }
+
+    private void loadAssets() {
+        // load textures
+        rm.loadTexture("imgs/boy_down_1.png");
+
+        // load tmx maps
+        rm.loadTiledMap("maps/test.tmx");
     }
 
     @Override

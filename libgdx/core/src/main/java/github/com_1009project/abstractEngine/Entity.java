@@ -39,7 +39,7 @@ public abstract class Entity {
 
     // this will be called every frame to update the entity
     public void update(float deltaTime){
-        this.previousPosition.set(this.position.x, this.position.y); // Store previous position
+        this.previousPosition.set(this.getCollisionComponent().getBounds().x, this.getCollisionComponent().getBounds().y); // Store previous position
         updateMovement(deltaTime); // Update the entity's movement
         
         // if entity is collidable, update its bounds
