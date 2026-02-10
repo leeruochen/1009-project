@@ -19,6 +19,7 @@ public class CameraManager {
 
     public CameraManager(int width, int height) {
         camera = new OrthographicCamera();
+        // set camera's viewport size
         camera.setToOrtho(false, width, height);
     }
 

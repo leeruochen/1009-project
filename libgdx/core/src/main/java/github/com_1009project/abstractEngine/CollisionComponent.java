@@ -7,7 +7,7 @@ public class CollisionComponent {
     private Rectangle bounds;
     private boolean active = true;
 
-    // creates a collision box that will follow the entity
+    // creates a collision bounds that will follow the entity
     public CollisionComponent(float x, float y, float width, float height) {
         this.bounds = new Rectangle(x, y, width, height);
     }

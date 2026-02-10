@@ -41,9 +41,15 @@ public abstract class Entity {
     }
 
     protected void createCollisionComponent(float width, float height) { 
+        // collision component creation
         // entities can call this in their constructor to make it collidable
         // protected so that only subclasses can create collision components
         this.collisionComponent = new CollisionComponent(position.x, position.y, width, height);
+    }
+
+    protected void createCollisionComponent(float width, float height, float offsetX, float offsetY) {
+        // overloaded method to create collision component with offsets suitable for "Players"
+        this.collisionComponent = new CollisionComponent(position.x + offsetX, position.y + offsetY, width, height);
     }
 
     public void setCollisionActive(boolean active) {
