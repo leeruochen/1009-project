@@ -15,6 +15,7 @@ public class GameMaster extends ApplicationAdapter{
     private CollisionManager cm;
     private ResourceManager rm;
     private CameraManager camera;
+    private MapManager mapManager;
     private SpriteBatch batch;
 
     // camera properties
@@ -34,14 +35,24 @@ public class GameMaster extends ApplicationAdapter{
         rm = new ResourceManager();
         batch = new SpriteBatch();
         entities = new ArrayList<>();
+        mapManager = new MapManager();
 
-        // set up camera
+        // set up camera with max world bounds
         camera = new CameraManager(width, height);
+        camera.setBounds(4000, 4000);
+
+        // set up the map
+        // scale the map if needed, if textures look small
+        // load the map from file
+        // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
+        mapManager.setScale(4.0f); 
+        mapManager.loadMap("maps/test.tmx", entities); 
+        mapManager.parseCollisionLayer(entities, "Collision");
 
         // example of creating an entity and making it the target of the camera
-        // Entity player = new PlayerEntity(100, 100, 32, 32, rm);
-        // entities.add(player);
-        // camera.setTarget(player);
+        Entity player = new CollisionBox(2000, 2000, 32, 32);
+        entities.add(player);
+        camera.setTarget(player);
         // this makes the camera follow the player entity
     }
 
@@ -57,22 +68,22 @@ public class GameMaster extends ApplicationAdapter{
         // input manager would go here
 
         // update all entities
-        for (Entity e : entities) {
-            e.update(deltaTime);
-        }
+        for (Entity e : entities) {e.update(deltaTime);}
 
         // update collisions
         cm.updateCollision(entities);
 
         // update camera position
         camera.cameraUpdate(deltaTime);
+
+        // render entities and map
+        mapManager.render(camera.camera);
+
         // batch will render entities according to cameraPosition
         batch.setProjectionMatrix(camera.camera.combined);
-
-        // render all entities
-        for (Entity e : entities) {
-            e.render(batch);
-        }
+        batch.begin();
+        for (Entity e : entities) {e.render(batch);}
+        batch.end();
     }
 
     @Override
