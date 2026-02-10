@@ -17,6 +17,7 @@ public abstract class Entity {
     private float speed;
     private float friction;
     private CollisionComponent collisionComponent;
+    private boolean isPersistent;
 
     public Entity() { // constructor to initialize the entity with defaults
         this.id = idCounter++; // id's are sequentially assigned
@@ -116,5 +117,15 @@ public abstract class Entity {
 
     public void setActive(boolean active) { // Setter for the active state
         this.active = active;
+    }
+
+    public void onDestroy(){} // method to be called when the entity is destroyed, can be overridden by subclasses for cleanup
+    
+    public boolean getPersistent() {
+        return isPersistent;
+    }
+
+    public void setPersistent(boolean persistent) {
+        this.isPersistent = persistent;
     }
 }
