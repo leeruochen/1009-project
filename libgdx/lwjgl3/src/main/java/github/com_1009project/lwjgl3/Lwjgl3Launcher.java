@@ -2,7 +2,8 @@ package github.com_1009project.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import github.com_1009project.abstractEngine.GameMaster;
+
+import github.com_1009project.GameMaster;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {

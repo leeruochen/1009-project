@@ -1,9 +1,16 @@
-package github.com_1009project.abstractEngine;
+package github.com_1009project;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import github.com_1009project.abstractEngine.CameraManager;
+import github.com_1009project.abstractEngine.CollisionManager;
+import github.com_1009project.abstractEngine.Entity;
+import github.com_1009project.abstractEngine.MapManager;
+import github.com_1009project.abstractEngine.ResourceManager;
+import github.com_1009project.abstractEngine.CollisionBox;
 
 import java.util.ArrayList;
 
@@ -92,3 +99,4 @@ public class GameMaster extends ApplicationAdapter{
         batch.dispose();
     }
 }
+

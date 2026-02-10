@@ -14,9 +14,11 @@ public class MapManager {
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    private float map_scale = 1.0f;
+    private float map_scale;
 
-    public MapManager() {}
+    public MapManager() {
+        this.map_scale = 1.0f;
+    }
 
     public void setScale(float scale) {
         // set scale if needed
