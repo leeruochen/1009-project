@@ -6,20 +6,28 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Entity {
     // properties fields to be used by subclasses
     private static int idCounter = 0;
-    protected int id; 
-    protected Vector2 position;
-    protected Vector2 size;
-    protected float rotation; 
-    protected Vector2 previousPosition;
-    protected boolean active;
-    protected CollisionComponent collisionComponent;
+    private int id; 
+    private boolean active;
+    private Vector2 position;
+    private Vector2 size;
+    private float rotation; 
+    private Vector2 previousPosition;
+    private Vector2 velocity;
+    private Vector2 acceleration;
+    private float speed;
+    private float friction;
+    private CollisionComponent collisionComponent;
 
     public Entity() { // constructor to initialize the entity with defaults
         this.id = idCounter++; // id's are sequentially assigned
         this.position = new Vector2(0, 0);
         this.size = new Vector2(1, 1); 
         this.rotation = 0;
-        this.previousPosition = new Vector2(0, 0); 
+        this.previousPosition = new Vector2(0, 0);
+        this.velocity = new Vector2(0, 0);
+        this.acceleration = new Vector2(0, 0);
+        this.speed = 0;
+        this.friction = 0; 
         this.active = true; 
         this.collisionComponent = null; 
     }
