@@ -1,0 +1,50 @@
+{
+    "activeFile": "test.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "test.tmx": {
+            "scale": 1.1615234374999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 512.2582814864638,
+                "y": 512.2582814864639
+            }
+        },
+        "test.tmx#Doors_windows_animation": {
+            "scaleInDock": 1
+        },
+        "test.tmx#Smoke_animation": {
+            "scaleInDock": 1
+        },
+        "test.tmx#Trees_animation": {
+            "scaleInDock": 1
+        },
+        "test.tmx#bird_fly_animation": {
+            "scaleInDock": 1
+        },
+        "test.tmx#bird_jump_animation": {
+            "scaleInDock": 1
+        },
+        "test.tmx#cat_animation": {
+            "scaleInDock": 1
+        },
+        "test.tmx#exterior": {
+            "scaleInDock": 1
+        },
+        "test.tmx#ground_grass_details": {
+            "scaleInDock": 1
+        },
+        "test.tmx#house_details": {
+            "scaleInDock": 1
+        }
+    },
+    "openFiles": [
+        "test.tmx"
+    ],
+    "project": "test.tiled-project",
+    "recentFiles": [
+        "test.tmx"
+    ]
+}

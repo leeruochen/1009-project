@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class CollisionBox extends Entity {
     public CollisionBox(float x, float y, float w, float h) {
         super();
-        this.position.set(x, y);
-        this.size.set(w, h);
+        this.setPosition(x, y);
+        this.setSize(w, h);
         this.createCollisionComponent(w, h);
     }
 

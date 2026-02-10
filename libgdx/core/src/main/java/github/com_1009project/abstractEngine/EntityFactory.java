@@ -1,4 +1,4 @@
-package github.com_1009project.abstractEngine;
+// package github.com_1009project.abstractEngine;
 
 public class EntityFactory {
     public Entity createEntity(EntityType type) {
