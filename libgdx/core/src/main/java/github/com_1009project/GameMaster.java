@@ -59,7 +59,8 @@ public class GameMaster extends ApplicationAdapter{
         // load the map from file
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
         mapManager.setScale(4.0f); 
-        mapManager.loadMap(rm.getTiledMap("maps/test.tmx"));
+        mapManager.setMap(rm.getTiledMap("maps/test.tmx"));
+        mapManager.render();
         mapManager.parseCollisionLayer(entities, "Collision");
 
         // example of creating an entity and making it the target of the camera
@@ -89,8 +90,8 @@ public class GameMaster extends ApplicationAdapter{
         // update camera position
         camera.cameraUpdate(deltaTime);
 
-        // render entities and map
-        mapManager.render(camera.camera);
+        // render entities and map based on camera position
+        mapManager.cameraView(camera.camera);
 
         if (player.hasCollided) {
             camera.shake(2f, 0.2f);

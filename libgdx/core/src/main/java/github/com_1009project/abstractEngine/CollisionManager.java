@@ -31,6 +31,8 @@ public class CollisionManager {
 
             // check for actual collisions with these neighbors with Rectangle's overlap
             for (Entity e2 : neighbors) {
+                if (e1 == e2) {continue;}
+
                 if (e1.getCollisionComponent().getBounds().overlaps(e2.getCollisionComponent().getBounds())) {
                     // if they overlap, trigger their onCollision methods
                     e1.onCollision(e2);

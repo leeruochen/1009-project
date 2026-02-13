@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import java.util.ArrayList;
 //https://libgdx.com/wiki/graphics/2d/tile-maps
 
-public class MapManager implements Disposable {
+public class MapManager extends Layer implements Disposable {
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -26,10 +26,16 @@ public class MapManager implements Disposable {
         this.map_scale = scale;
     }
 
-    public void loadMap(TiledMap map) {
-        // load map given
+    public void setMap(TiledMap map) {
+        // set the map
         this.map = map;
+    }
 
+    public void update(float deltaTime) {
+    }
+
+    @Override
+    public void render() {
         // OrthogonalTiledMapRenderer renders top-down maps
         renderer = new OrthogonalTiledMapRenderer(map, map_scale);
     }
@@ -58,7 +64,8 @@ public class MapManager implements Disposable {
         }
     }
 
-    public void render(OrthographicCamera camera) {
+    // render the map using the camera
+    public void cameraView(OrthographicCamera camera) {
         if (renderer == null) return;
         renderer.setView(camera);
         renderer.render();
