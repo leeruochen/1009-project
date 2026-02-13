@@ -4,12 +4,15 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.graphics.Texture;
 
 import github.com_1009project.abstractEngine.CameraManager;
 import github.com_1009project.abstractEngine.CollisionManager;
 import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.MapManager;
-import github.com_1009project.abstractEngine.ResourceManager;
 import github.com_1009project.abstractEngine.testEntity;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ public class GameMaster extends ApplicationAdapter{
     // private EventManager em;
     // private UIManager um;
     private CollisionManager cm;
-    private ResourceManager rm;
+    private AssetManager am;
     private CameraManager camera;
     private MapManager mapManager;
     private SpriteBatch batch;
@@ -29,7 +32,7 @@ public class GameMaster extends ApplicationAdapter{
     // camera properties
     private int width, height;
 
-    private ArrayList<Entity> entities;
+    private ArrayList<Entity> entities; // to be replaced with EntityManager later
 
     public GameMaster(int width, int height) {
         this.width = width;
@@ -40,8 +43,8 @@ public class GameMaster extends ApplicationAdapter{
     @Override
     public void create() {
         cm = new CollisionManager(128);
-        rm = new ResourceManager();
         batch = new SpriteBatch();
+        am = new AssetManager();
         entities = new ArrayList<>(); 
         mapManager = new MapManager();
 
@@ -50,21 +53,23 @@ public class GameMaster extends ApplicationAdapter{
         camera.setBounds(4000, 4000);
 
         // load assets
+        // update the asset manager to actually load the assets
+        // finishLoading() makes sure all assets are loaded before proceeding
         loadAssets();
-        rm.update();
-        rm.getManager().finishLoading();
+        am.update();
+        am.finishLoading();
 
         // set up the map
         // scale the map if needed, if textures look small
         // load the map from file
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
         mapManager.setScale(4.0f); 
-        mapManager.setMap(rm.getTiledMap("maps/test.tmx"));
+        mapManager.setMap(am.get("maps/test.tmx", TiledMap.class));
         mapManager.render();
         mapManager.parseCollisionLayer(entities, "Collision");
 
         // example of creating an entity and making it the target of the camera
-        player = new testEntity(200, 200, 50, 50, rm.getTexture("imgs/boy_down_1.png"));
+        player = new testEntity(200, 200, 50, 50, am.get("imgs/boy_down_1.png", Texture.class));
         entities.add(player);
         camera.setTarget(player);
         // this makes the camera follow the player entity
@@ -107,15 +112,17 @@ public class GameMaster extends ApplicationAdapter{
 
     private void loadAssets() {
         // load textures
-        rm.loadTexture("imgs/boy_down_1.png");
+        am.load("imgs/boy_down_1.png", Texture.class);
 
-        // load tmx maps
-        rm.loadTiledMap("maps/test.tmx");
+        // load tmx maps, params required to prevent errors
+        TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
+        params.projectFilePath = "maps/test.tiled-project";
+        am.load("maps/test.tmx", TiledMap.class, params);
     }
 
     @Override
     public void dispose() {
-        rm.dispose();
+        am.dispose();
         batch.dispose();
     }
 }
