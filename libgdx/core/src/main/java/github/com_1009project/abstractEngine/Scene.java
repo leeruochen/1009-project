@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Scene {
     private int id;
@@ -20,7 +21,7 @@ public class Scene {
     public void init() {
         // add BackgroundLayer and EntityLayer
         layers.add(new BackgroundLayer(resourceManager));
-        layers.add(new EntityLayer(resourceManager));
+        layers.add(new EntityLayer(new EventManager()));
         layers.add(new UILayer());
     }
     public void onEnter() {
@@ -41,9 +42,10 @@ public class Scene {
     }
     public void render() {
         for (Layer layer : layers) {
-            layer.render();
+            layer.render(); 
         }
     }
+
     public void dispose() {
         for (Layer layer : layers) {
             layer.dispose();
