@@ -1,50 +1,55 @@
 package github.com_1009project.abstractEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
 
 public class OutputManager implements EventObserver{
-    private HashMap<Event, Sound> soundMap;
+    private ResourceManager resourceManager;
+    private HashMap<Event, String> soundMap;
+    private HashMap<Event, String> musicMap;
     private Music curMusic;
-    private void playMusic(String path){
+    private void playMusic(Event event){
         if (curMusic != null) curMusic.stop();
-        curMusic = Gdx.audio.newMusic(Gdx.files.internal(path));
+        curMusic = resourceManager.getMusic(musicMap.get(event));
         curMusic.setLooping(true);
         curMusic.play();
     }
-    
-    public void loadSound(Event event, String filePath){
-        Sound sound = Gdx.audio.newSound(Gdx.files.internal(filePath));
-        soundMap.put(event, sound);
+
+    private void playSound(Event event){
+        resourceManager.getSound(soundMap.get(event)).play(1.0f);
     }
 
+    public void loadSound(Event event, String filePath){
+        resourceManager.loadSound(filePath);
+        soundMap.put(event, filePath);
+    }
+
+    public void loadMusic(Event event, String filePath){
+        resourceManager.loadMusic(filePath);
+        musicMap.put(event, filePath);
+    }
+    
     public void dispose(){
-        for (Sound sound: soundMap.values()){
-            sound.dispose();
-        }
+        // all other disposal is offloaded to ResourceManager
         if (curMusic != null){curMusic.dispose();}
     }
 
-    public OutputManager(){
-        soundMap = new HashMap<Event, Sound>();
+    public OutputManager(ResourceManager resourceManager){
+        soundMap = new HashMap<Event, String>();
+        musicMap = new HashMap<Event, String>();
     }
+
     @Override
     public void onNotify(Event event, Boolean up){
-        if (soundMap.containsKey(event)){soundMap.get(event).play(1.0f);}
-        switch (event) {
-            //Add misc sound cases here
-            case PlayerJump:
-                playMusic("temppath"); //change music path
-                break;
-        
-            default:
-
-                break;
-        }
+        if (soundMap.containsKey(event)){playSound(event);}
+        playMusic(event);
     }
+
     @Override
     public void onNotify(Event event, Boolean up, int screenX, int screenY){onNotify(event, up);}
 }
