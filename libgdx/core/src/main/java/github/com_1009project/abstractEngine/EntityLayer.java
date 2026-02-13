@@ -1,10 +1,7 @@
-package github.com_1009project.lwjgl3;
+package github.com_1009project.abstractEngine;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import github.com_1009project.abstractEngine.Entity;
-import github.com_1009project.abstractEngine.ResourceManager;
 
 // [waiting for EntityManager implementation cause will cause errors]
 public class EntityLayer extends Layer {

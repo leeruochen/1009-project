@@ -1,11 +1,9 @@
-package github.com_1009project.lwjgl3;
+package github.com_1009project.abstractEngine;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-
-import github.com_1009project.abstractEngine.ResourceManager;
 
 public class Scene {
     private int id;

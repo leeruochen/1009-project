@@ -1,9 +1,7 @@
-package github.com_1009project.lwjgl3;
+package github.com_1009project.abstractEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import github.com_1009project.abstractEngine.ResourceManager;
 
 public class SceneManager {
     private Map<Integer, Scene> scenes = new HashMap<>();

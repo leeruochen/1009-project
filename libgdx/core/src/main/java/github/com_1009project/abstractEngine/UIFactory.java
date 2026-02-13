@@ -1,4 +1,4 @@
-package github.com_1009project.lwjgl3;
+package github.com_1009project.abstractEngine;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -11,9 +11,10 @@ public class UIFactory {
     private UILayer uiLayer;
     private Skin skin;
 
-    public UIFactory(UILayer uiLayer, Skin skin) {
+    public UIFactory(UILayer uiLayer, Skin skin, EventManager eventManager) {
         this.skin = skin;
         this.uiLayer = uiLayer;
+        this.eventManager = eventManager;
     }
 
     public TextButton createButton(String text, Event event, float x, float y) {
@@ -34,7 +35,6 @@ public class UIFactory {
 
     public ProgressBar createResourceBar(float x, float y, boolean vertical){
         ProgressBar resourceBar = new ProgressBar(0, 100, 1, vertical, skin);
-        //TODO create interface/component to represent resource here
         resourceBar.setPosition(x, y);
         uiLayer.addActor(resourceBar);
         

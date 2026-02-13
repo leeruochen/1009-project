@@ -1,4 +1,4 @@
-package github.com_1009project.lwjgl3;
+package github.com_1009project.abstractEngine;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;

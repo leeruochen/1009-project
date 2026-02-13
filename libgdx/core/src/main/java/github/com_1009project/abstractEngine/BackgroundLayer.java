@@ -1,8 +1,7 @@
-package github.com_1009project.lwjgl3;
+package github.com_1009project.abstractEngine;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import github.com_1009project.abstractEngine.ResourceManager;
 
 public class BackgroundLayer extends Layer {
     private Texture background;

@@ -1,4 +1,4 @@
-package github.com_1009project.lwjgl3;
+package github.com_1009project.abstractEngine;
 
 public interface EventObserver {
     public void onNotify(Event event, Boolean up);
