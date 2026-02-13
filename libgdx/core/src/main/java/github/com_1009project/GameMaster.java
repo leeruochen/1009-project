@@ -42,7 +42,7 @@ public class GameMaster extends ApplicationAdapter{
         cm = new CollisionManager(128);
         rm = new ResourceManager();
         batch = new SpriteBatch();
-        entities = new ArrayList<>();
+        entities = new ArrayList<>(); 
         mapManager = new MapManager();
 
         // set up camera with max world bounds

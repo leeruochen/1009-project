@@ -2,6 +2,7 @@ package github.com_1009project.abstractEngine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class EntityManager {
 
@@ -50,5 +51,10 @@ public class EntityManager {
             }
         }
         processRemovals(); // Process removals after updates
+    }
+
+    // getter for entities
+    public List<Entity> getEntities() {
+        return Collections.unmodifiableList(entities);
     }
 }
