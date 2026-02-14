@@ -3,27 +3,29 @@ package github.com_1009project.abstractEngine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class EntityManager {
+public class EntityManager implements EventObserver {
 
     private final List<Entity> entities = new ArrayList<>();
     private final List<Entity> toRemove = new ArrayList<>();
 
-    // private final EntityFactory factory;
+    private final EntityFactory factory;
+    private MovementManager movementManager;
 
-    // public EntityManager(EntityFactory factory) {
-    //     this.factory = factory;
-    // }
+    public EntityManager(EntityFactory factory) {
+        this.factory = factory;
+    }
 
     // Creates a new entity of the specified type, adds it to the manager, and returns it
-    // public Entity createEntity(EntityType type) {
-    //     Entity entity = factory.createEntity(type);
+    public Entity createEntity(EntityType type) {
+        Entity entity = factory.createEntity(type);
 
-    //     entity.setActive(true);
+        entity.setActive(true);
 
-    //     entities.add(entity);
-    //     return entity;
-    // }
+        entities.add(entity);
+        return entity;
+    }
 
     // Marks an entity for removal at the end of the current update cycle
     public void markForRemoval(Entity entity) {
@@ -73,7 +75,7 @@ public class EntityManager {
         }
         processRemovals();
     }
-    	public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch) {
 		for (Entity entity : entities) {
 			if (entity.isActive()) {
 				entity.render(batch);

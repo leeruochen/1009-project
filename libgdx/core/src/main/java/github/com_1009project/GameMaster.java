@@ -134,8 +134,7 @@ public class GameMaster extends ApplicationAdapter{
         // batch will render entities according to cameraPosition
         batch.setProjectionMatrix(camera.getCamera().combined);
         batch.begin();
-        for (Entity e : entityManager.getEntities()) {e.render(batch);}
-        //ruo chen can try use entityManager.render here thanks
+        entityManager.render(batch);
         batch.end();
     }
 
