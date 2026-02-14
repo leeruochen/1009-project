@@ -94,8 +94,8 @@ public abstract class Entity {
     public void setVelocity(Vector2 velocity) { this.velocity = velocity; }
     public Vector2 getAcceleration() { return acceleration; }
     public void setAcceleration(Vector2 acceleration) { this.acceleration = acceleration; }
-    public float getSpeed() { return speed; }
-    public void setSpeed(float speed) { this.speed = speed; }
+    public float getMaxSpeed() { return maxSpeed; }
+    public void setMaxSpeed(float maxSpeed) { this.maxSpeed = maxSpeed; }
     public float getFriction() { return friction; }
     public void setFriction(float friction) { this.friction = friction;}
     public boolean isActive() { return active;}
