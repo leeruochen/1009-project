@@ -57,4 +57,11 @@ public class EntityManager {
     public List<Entity> getEntities() {
         return Collections.unmodifiableList(entities);
     }
+
+    // add entities to the manager
+    public void addEntities(List<Entity> newEntities) {
+        for (Entity e : newEntities) {
+            entities.add(e.copy());
+        }
+    }
 }

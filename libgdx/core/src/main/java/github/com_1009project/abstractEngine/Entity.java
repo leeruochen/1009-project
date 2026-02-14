@@ -105,4 +105,6 @@ public abstract class Entity {
     public void setPersistent(boolean persistent) {
         this.isPersistent = persistent;
     }
+
+    public Entity copy(){return this;}; // method for creating a copy of the entity
 }

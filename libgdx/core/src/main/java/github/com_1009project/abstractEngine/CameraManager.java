@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 
 public class CameraManager {
-    public OrthographicCamera camera = null;
+    private OrthographicCamera camera = null;
     private Entity target;
 
     private float lerp = 0.1f; // interpolation factor for smooth camera movement
@@ -77,5 +77,9 @@ public class CameraManager {
     public void shake(float intensity, float duration) {
         this.shakeIntensity = intensity;
         this.shakeDuration = duration;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 }

@@ -11,14 +11,16 @@ import com.badlogic.gdx.graphics.Texture;
 
 import github.com_1009project.abstractEngine.CameraManager;
 import github.com_1009project.abstractEngine.CollisionManager;
-import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.MapManager;
+import github.com_1009project.abstractEngine.EntityManager;
+import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.testEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameMaster extends ApplicationAdapter{
-    // private EntityManager em;
+    private EntityManager em;
     // private SceneManager sm;
     // private EventManager em;
     // private UIManager um;
@@ -32,8 +34,6 @@ public class GameMaster extends ApplicationAdapter{
     // camera properties
     private int width, height;
 
-    private ArrayList<Entity> entities; // to be replaced with EntityManager later
-
     public GameMaster(int width, int height) {
         this.width = width;
         this.height = height;
@@ -45,8 +45,8 @@ public class GameMaster extends ApplicationAdapter{
         cm = new CollisionManager(128);
         batch = new SpriteBatch();
         am = new AssetManager();
-        entities = new ArrayList<>(); 
-        mapManager = new MapManager();
+        em = new EntityManager(new EntityFactory());
+        
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -63,16 +63,17 @@ public class GameMaster extends ApplicationAdapter{
         // scale the map if needed, if textures look small
         // load the map from file
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
+        mapManager = new MapManager(camera.getCamera());
         mapManager.setScale(4.0f); 
         mapManager.setMap(am.get("maps/test.tmx", TiledMap.class));
-        mapManager.render();
-        mapManager.parseCollisionLayer(entities, "Collision");
+        List<Entity> collisionLayer = mapManager.parseCollisionLayer("Collision");
+        em.addEntities(collisionLayer);
 
         // example of creating an entity and making it the target of the camera
         player = new testEntity(200, 200, 50, 50, am.get("imgs/boy_down_1.png", Texture.class));
-        entities.add(player);
-        camera.setTarget(player);
+        em.createEntity(player);
         // this makes the camera follow the player entity
+        camera.setTarget(player);
     }
 
     // our main gameplay/simulation loop
@@ -87,16 +88,16 @@ public class GameMaster extends ApplicationAdapter{
         // input manager would go here
 
         // update all entities
-        for (Entity e : entities) {e.update(deltaTime);}
+        em.update(deltaTime);
 
         // update collisions
-        cm.updateCollision(entities);
+        cm.updateCollision(em.getEntities());
 
         // update camera position
         camera.cameraUpdate(deltaTime);
 
         // render entities and map based on camera position
-        mapManager.cameraView(camera.camera);
+        mapManager.render();
 
         if (player.hasCollided) {
             camera.shake(2f, 0.2f);
@@ -104,9 +105,9 @@ public class GameMaster extends ApplicationAdapter{
         }
 
         // batch will render entities according to cameraPosition
-        batch.setProjectionMatrix(camera.camera.combined);
+        batch.setProjectionMatrix(camera.getCamera().combined);
         batch.begin();
-        for (Entity e : entities) {e.render(batch);}
+        for (Entity e : em.getEntities()) {e.render(batch);}
         batch.end();
     }
 

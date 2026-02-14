@@ -9,16 +9,19 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 import java.util.ArrayList;
+import java.util.List;
 //https://libgdx.com/wiki/graphics/2d/tile-maps
 
 public class MapManager extends Layer implements Disposable {
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    private OrthographicCamera camera;
     private float map_scale;
 
-    public MapManager() {
+    public MapManager(OrthographicCamera camera) {
         this.map_scale = 1.0f;
+        this.camera = camera;
     }
 
     public void setScale(float scale) {
@@ -29,20 +32,24 @@ public class MapManager extends Layer implements Disposable {
     public void setMap(TiledMap map) {
         // set the map
         this.map = map;
+        this.renderer = new OrthogonalTiledMapRenderer(map, map_scale);
     }
 
     public void update(float deltaTime) {
     }
 
+    // render the map based on the camera's position and zoom level, so that only the visible portion of the map is rendered
     @Override
     public void render() {
-        // OrthogonalTiledMapRenderer renders top-down maps
-        renderer = new OrthogonalTiledMapRenderer(map, map_scale);
+        if (renderer == null) return;
+        renderer.setView(camera);
+        renderer.render();
     }
 
-    public void parseCollisionLayer(ArrayList<Entity> entities, String layerName) {
+    public List<Entity> parseCollisionLayer(String layerName) {
         // get "layerName" layer from the map
         MapLayer collisionLayer = map.getLayers().get(layerName);
+        List<Entity> entities = new ArrayList<>();
 
         // gets every object in the layer, if the object is a rectangle, create a collision box.
         // developers should only use rectangle objects for collision layers.
@@ -52,8 +59,8 @@ public class MapManager extends Layer implements Disposable {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
                     // if scale is set, apply it to the rectangle dimensions
-                    float scaledWidth = rect.width * map_scale;
                     float scaledHeight = rect.height * map_scale;
+                    float scaledWidth = rect.width * map_scale;
                     float scaledX = rect.x * map_scale;
                     float scaledY = rect.y * map_scale;
 
@@ -62,17 +69,10 @@ public class MapManager extends Layer implements Disposable {
                 }
             }
         }
-    }
-
-    // render the map using the camera
-    public void cameraView(OrthographicCamera camera) {
-        if (renderer == null) return;
-        renderer.setView(camera);
-        renderer.render();
+        return entities;
     }
 
     public void dispose() {
-        if (map != null) map.dispose();
         if (renderer != null) renderer.dispose();
     }
 }

@@ -1,6 +1,6 @@
 package github.com_1009project.abstractEngine;
 
-import java.util.ArrayList;
+import java.util.List;
 import com.badlogic.gdx.utils.Array;
 
 public class CollisionManager {
@@ -13,7 +13,7 @@ public class CollisionManager {
 
     // this checks every collidable entity against nearby entities for collisions
     // gamemaster calls this every frame with the list of all entities
-    public void updateCollision(ArrayList<Entity> entities) {
+    public void updateCollision(List<Entity> entities) {
         // clear and re-insert all collidable entities into the spatial hash grid
         grid.clear();
         for (Entity e : entities) {
