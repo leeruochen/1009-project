@@ -14,10 +14,12 @@ public abstract class Entity {
     private Vector2 previousPosition;
     private Vector2 velocity;
     private Vector2 acceleration;
-    private float speed;
+    private float maxSpeed;
     private float friction;
     private CollisionComponent collisionComponent;
     private boolean isPersistent;
+    private boolean inputEnabled;
+    private boolean onGround;
 
     public Entity() { // constructor to initialize the entity with defaults
         this.id = idCounter++; // id's are sequentially assigned
@@ -27,10 +29,13 @@ public abstract class Entity {
         this.previousPosition = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
         this.acceleration = new Vector2(0, 0);
-        this.speed = 0;
+        this.maxSpeed = 0;
         this.friction = 0; 
         this.active = true; 
+        this.inputEnabled = true;
+        this.onGround = true;
         this.collisionComponent = null; 
+        
     }
 
     // to render the entity
@@ -104,6 +109,22 @@ public abstract class Entity {
 
     public void setPersistent(boolean persistent) {
         this.isPersistent = persistent;
+    }
+
+    public boolean isInputEnabled() {
+    	return inputEnabled;
+    }
+    
+    public void setInputEnabled(boolean inputEnabled) {
+    	this.inputEnabled = inputEnabled;
+    }
+    
+    public boolean isOnGround() {
+        return onGround;
+    }
+    
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
     }
 
     public Entity copy(){return this;}; // method for creating a copy of the entity
