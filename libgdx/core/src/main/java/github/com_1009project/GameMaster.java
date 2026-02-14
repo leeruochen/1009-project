@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameMaster extends ApplicationAdapter{
-    private EntityManager em;
+    private EntityManager entityManager;
     // private SceneManager sm;
-    // private EventManager em;
+    private EventManager eventManager;
+    private MovementManager movementManager;
     // private UIManager um;
     private CollisionManager cm;
     private AssetManager am;
@@ -45,7 +46,7 @@ public class GameMaster extends ApplicationAdapter{
         cm = new CollisionManager(128);
         batch = new SpriteBatch();
         am = new AssetManager();
-        em = new EntityManager(new EntityFactory());
+        entityManager = new EntityManager(new EntityFactory());
         
 
         // set up camera with max world bounds
@@ -67,13 +68,31 @@ public class GameMaster extends ApplicationAdapter{
         mapManager.setScale(4.0f); 
         mapManager.setMap(am.get("maps/test.tmx", TiledMap.class));
         List<Entity> collisionLayer = mapManager.parseCollisionLayer("Collision");
-        em.addEntities(collisionLayer);
+        entityManager.addEntities(collisionLayer);
 
         // example of creating an entity and making it the target of the camera
         player = new testEntity(200, 200, 50, 50, am.get("imgs/boy_down_1.png", Texture.class));
-        em.createEntity(player);
+        entityManager.createEntity(player);
         // this makes the camera follow the player entity
         camera.setTarget(player);
+
+        		//eventmanager adds entityManager as an event observer
+		eventManager.addObserver(entityManager);
+		
+		//entitymanager and movementmanager connected (aggregation relationship)
+		entityManager.setMovementManager(movementManager);
+
+		//key mappings for eventManager
+		eventManager.mapKey(Input.Keys.W, Event.PlayerUp);
+		eventManager.mapKey(Input.Keys.S, Event.PlayerDown);
+		eventManager.mapKey(Input.Keys.A, Event.PlayerLeft);
+		eventManager.mapKey(Input.Keys.D, Event.PlayerRight);
+		eventManager.mapKey(Input.Keys.RIGHT, Event.PlayerRight);
+		eventManager.mapKey(Input.Keys.LEFT, Event.PlayerLeft);
+		eventManager.mapKey(Input.Keys.SPACE, Event.PlayerJump);
+
+		// Register input processor
+		Gdx.input.setInputProcessor(eventManager);
     }
 
     // our main gameplay/simulation loop
@@ -88,10 +107,10 @@ public class GameMaster extends ApplicationAdapter{
         // input manager would go here
 
         // update all entities
-        em.update(deltaTime);
+        entityManager.update(deltaTime);
 
         // update collisions
-        cm.updateCollision(em.getEntities());
+        cm.updateCollision(entityManager.getEntities());
 
         // update camera position
         camera.cameraUpdate(deltaTime);
@@ -108,6 +127,7 @@ public class GameMaster extends ApplicationAdapter{
         batch.setProjectionMatrix(camera.getCamera().combined);
         batch.begin();
         for (Entity e : em.getEntities()) {e.render(batch);}
+        //ruo chen can try use entityManager.render here thanks
         batch.end();
     }
 
