@@ -73,6 +73,33 @@ public class EntityManager {
         }
         processRemovals();
     }
+    	public void render(SpriteBatch batch) {
+		for (Entity entity : entities) {
+			if (entity.isActive()) {
+				entity.render(batch);
+			}
+		}
+	}
+	
+	//reference to movementManager in GameMaster
+	public void setMovementManager(MovementManager movementManager) {
+		this.movementManager = movementManager;
+	}
 
-    
+	@Override
+	public void onNotify(Event event, Boolean up) {
+		// Only loop through entities that have explicitly flagged they want input
+		for (Entity entity : entities) {
+			if (entity.isActive()) {
+				if (entity.isInputEnabled()) {
+					movementManager.handlePlayerInput(entity, event, up);
+				}
+			}
+		}
+	}
+
+	@Override // this is for handling mouse events
+	public void onNotify(Event event, Boolean up, int screenX, int screenY) {
+
+	}
 }
