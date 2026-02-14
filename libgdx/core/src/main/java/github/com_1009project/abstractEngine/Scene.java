@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Scene {
     private int id;
     private List<Layer> layers = new ArrayList<>();;
-    private ResourceManager resourceManager;
+    private AssetManager resourceManager;
+    private EntityManager entityManager;
+    private EventManager eventManager;
 
-    public Scene(int id, ResourceManager resourceManager) {
+    public Scene(int id, AssetManager resourceManager, EntityManager entityManager, EventManager eventManager) {
         this.id = id;
         this.resourceManager = resourceManager;
+        this.entityManager = entityManager;
+        this.eventManager = eventManager;
     }
     public int getId() {
         return id;
@@ -21,7 +26,7 @@ public class Scene {
     public void init() {
         // add BackgroundLayer and EntityLayer
         layers.add(new BackgroundLayer(resourceManager));
-        layers.add(new EntityLayer(new EventManager()));
+        layers.add(new EntityLayer(eventManager, entityManager));
         layers.add(new UILayer());
     }
     public void onEnter() {

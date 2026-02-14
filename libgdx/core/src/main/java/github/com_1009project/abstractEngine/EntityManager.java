@@ -15,6 +15,7 @@ public class EntityManager implements EventObserver {
     private final EntityFactory factory;
     private MovementManager movementManager;
     private AssetManager assetManager;
+    private EventManager eventManager;
 
     public EntityManager(EntityFactory factory, AssetManager assetManager) {
         this.factory = factory;
@@ -85,11 +86,19 @@ public class EntityManager implements EventObserver {
 		}
 	}
 	
+    public void setEventManager(EventManager eventManager){
+        this.eventManager = eventManager;
+    }
+
 	//reference to movementManager in GameMaster
 	public void setMovementManager(MovementManager movementManager) {
 		this.movementManager = movementManager;
 	}
 
+    public void dispose(){
+        //dispose behaviour
+        return;
+    }
 	@Override
 	public void onNotify(Event event, Boolean up) {
 		// Only loop through entities that have explicitly flagged they want input

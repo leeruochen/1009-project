@@ -19,6 +19,8 @@ import github.com_1009project.abstractEngine.testEntity;
 import github.com_1009project.abstractEngine.EntityFactory;
 import github.com_1009project.abstractEngine.EventManager;
 import github.com_1009project.abstractEngine.MovementManager;
+import github.com_1009project.abstractEngine.SceneManager;
+import github.com_1009project.abstractEngine.UIFactory;
 import github.com_1009project.abstractEngine.Event;
 import com.badlogic.gdx.Input;
 
@@ -26,10 +28,10 @@ import java.util.List;
 
 public class GameMaster extends ApplicationAdapter{
     private EntityManager entityManager;
-    // private SceneManager sm;
+    private SceneManager sm;
     private EventManager eventManager;
     private MovementManager movementManager;
-    // private UIManager um;
+    private UIFactory uf;
     private CollisionManager collisionManager;
     private AssetManager assetManager;
     private CameraManager camera;
@@ -56,6 +58,8 @@ public class GameMaster extends ApplicationAdapter{
         entityManager = new EntityManager(entityFactory, assetManager);
         eventManager = new EventManager();
         movementManager = new MovementManager();
+        sm = new SceneManager(assetManager, entityManager, eventManager);
+        
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -160,6 +164,7 @@ public class GameMaster extends ApplicationAdapter{
         batch.dispose();
         mapManager.dispose();
         collisionManager.dispose();
+        sm.dispose();
     }
 }
 

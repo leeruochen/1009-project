@@ -7,8 +7,8 @@ public class EntityLayer extends Layer {
     private EntityManager entityManager;
     private SpriteBatch batch;
 
-    public EntityLayer(EventManager eventManager) {
-        entityManager = new EntityManager();
+    public EntityLayer(EventManager eventManager, EntityManager entityManager) {
+        this.entityManager = entityManager;
         entityManager.setEventManager(eventManager);
     }
 

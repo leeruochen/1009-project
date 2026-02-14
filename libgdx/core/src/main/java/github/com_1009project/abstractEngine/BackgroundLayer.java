@@ -1,5 +1,6 @@
 package github.com_1009project.abstractEngine;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -7,8 +8,8 @@ public class BackgroundLayer extends Layer {
     private Texture background;
     private SpriteBatch batch;
 
-    public BackgroundLayer(ResourceManager resourceManager) {
-        background = resourceManager.getTexture("background.png");
+    public BackgroundLayer(AssetManager resourceManager) {
+        background = resourceManager.get("background.png", Texture.class);
         batch = new SpriteBatch();
     }
 
