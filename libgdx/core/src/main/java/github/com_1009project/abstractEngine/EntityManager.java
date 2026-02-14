@@ -9,21 +9,21 @@ public class EntityManager {
     private final List<Entity> entities = new ArrayList<>();
     private final List<Entity> toRemove = new ArrayList<>();
 
-    private final EntityFactory factory;
+    // private final EntityFactory factory;
 
-    public EntityManager(EntityFactory factory) {
-        this.factory = factory;
-    }
+    // public EntityManager(EntityFactory factory) {
+    //     this.factory = factory;
+    // }
 
     // Creates a new entity of the specified type, adds it to the manager, and returns it
-    public Entity createEntity(EntityType type) {
-        Entity entity = factory.createEntity(type);
+    // public Entity createEntity(EntityType type) {
+    //     Entity entity = factory.createEntity(type);
 
-        entity.setActive(true);
+    //     entity.setActive(true);
 
-        entities.add(entity);
-        return entity;
-    }
+    //     entities.add(entity);
+    //     return entity;
+    // }
 
     // Marks an entity for removal at the end of the current update cycle
     public void markForRemoval(Entity entity) {
@@ -64,4 +64,15 @@ public class EntityManager {
             entities.add(e.copy());
         }
     }
+
+    public void clear() {
+        for (Entity entity : entities) {
+            if (!entity.getPersistent()) {
+                markForRemoval(entity);
+            }
+        }
+        processRemovals();
+    }
+
+    
 }
