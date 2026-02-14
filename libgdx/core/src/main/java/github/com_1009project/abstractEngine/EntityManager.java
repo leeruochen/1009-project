@@ -3,6 +3,8 @@ package github.com_1009project.abstractEngine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class EntityManager implements EventObserver {
@@ -12,16 +14,16 @@ public class EntityManager implements EventObserver {
 
     private final EntityFactory factory;
     private MovementManager movementManager;
+    private AssetManager assetManager;
 
-    public EntityManager(EntityFactory factory) {
+    public EntityManager(EntityFactory factory, AssetManager assetManager) {
         this.factory = factory;
+        this.assetManager = assetManager;
     }
 
     // Creates a new entity of the specified type, adds it to the manager, and returns it
     public Entity createEntity(EntityType type) {
-        Entity entity = factory.createEntity(type);
-
-        entity.setActive(true);
+        Entity entity = factory.createEntity(type, assetManager);
 
         entities.add(entity);
         return entity;

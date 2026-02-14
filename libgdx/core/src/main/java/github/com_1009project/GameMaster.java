@@ -53,8 +53,9 @@ public class GameMaster extends ApplicationAdapter{
         batch = new SpriteBatch();
         assetManager = new AssetManager();
         entityFactory = new EntityFactory();
-        entityManager = new EntityManager(entityFactory);
-        
+        entityManager = new EntityManager(entityFactory, assetManager);
+        eventManager = new EventManager();
+        movementManager = new MovementManager();
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -76,11 +77,9 @@ public class GameMaster extends ApplicationAdapter{
         mapManager.setMap(assetManager.get("maps/test.tmx", TiledMap.class));
         List<Entity> collisionLayer = mapManager.loadCollisionLayer("Collision");
         entityManager.addEntities(collisionLayer);
-        entityManager.addEntities(collisionLayer);
 
         // example of creating an entity and making it the target of the camera
-        player = new testEntity(200, 200, 50, 50, assetManager.get("imgs/boy_down_1.png", Texture.class));
-        entityManager.createEntity(EntityType.PLAYER);
+        player = (testEntity) entityManager.createEntity(EntityType.PLAYER);
         // this makes the camera follow the player entity
         camera.setTarget(player);
 
