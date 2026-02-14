@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.List;
 //https://libgdx.com/wiki/graphics/2d/tile-maps
@@ -17,13 +18,14 @@ public class MapManager extends Layer implements Disposable {
     private final EntityFactory entityFactory;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
     private float map_scale;
+    private OrthographicCamera staticCam;
 
-    public MapManager(OrthographicCamera camera, EntityFactory entityFactory) {
+    public MapManager(EntityFactory entityFactory) {
         this.map_scale = 1.0f;
-        this.camera = camera;
         this.entityFactory = entityFactory;
+        this.staticCam = new OrthographicCamera();
+        this.staticCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public void setScale(float scale) {
@@ -40,9 +42,16 @@ public class MapManager extends Layer implements Disposable {
     public void update(float deltaTime) {
     }
 
-    // render the map based on the camera's position and zoom level, so that only the visible portion of the map is rendered
+    // render static map
     @Override
     public void render() {
+        if (renderer == null) return;
+        renderer.setView(staticCam);
+        renderer.render();
+    }
+
+    // render dynamic map with camera
+    public void render(OrthographicCamera camera) {
         if (renderer == null) return;
         renderer.setView(camera);
         renderer.render();
@@ -76,6 +85,16 @@ public class MapManager extends Layer implements Disposable {
             }
         }
         return entities;
+    }
+
+    public OrthographicCamera getCamera() {
+        return staticCam;
+    }
+
+    public void resize(int width, int height) {
+        // update camera viewport on window resize
+        this.staticCam.setToOrtho(false, width, height);
+        this.staticCam.update();
     }
 
     public void dispose() {

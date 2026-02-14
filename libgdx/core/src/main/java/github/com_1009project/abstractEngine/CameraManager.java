@@ -79,6 +79,12 @@ public class CameraManager {
         this.shakeDuration = duration;
     }
 
+    public void resize(int width, int height) {
+        // update camera viewport on window resize
+        camera.setToOrtho(false, width, height);
+        camera.update();
+    }
+
     public OrthographicCamera getCamera() {
         return camera;
     }

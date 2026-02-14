@@ -72,7 +72,7 @@ public class GameMaster extends ApplicationAdapter{
         // scale the map if needed, if textures look small
         // load the map from file
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
-        mapManager = new MapManager(camera.getCamera(), entityFactory);
+        mapManager = new MapManager(entityFactory);
         mapManager.setScale(4.0f); 
         mapManager.setMap(assetManager.get("maps/test.tmx", TiledMap.class));
         List<Entity> collisionLayer = mapManager.loadCollisionLayer("Collision");
@@ -123,7 +123,7 @@ public class GameMaster extends ApplicationAdapter{
         camera.cameraUpdate(deltaTime);
 
         // render entities and map based on camera position
-        mapManager.render();
+        mapManager.render(camera.getCamera());
 
         if (player.hasCollided) {
             camera.shake(2f, 0.2f);
@@ -146,6 +146,12 @@ public class GameMaster extends ApplicationAdapter{
         TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
         params.projectFilePath = "maps/test.tiled-project";
         assetManager.load("maps/test.tmx", TiledMap.class, params);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        camera.resize(width, height);
+        mapManager.resize(width, height);
     }
 
     @Override
