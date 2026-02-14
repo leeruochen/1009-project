@@ -2,7 +2,7 @@ package github.com_1009project.abstractEngine;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class MovementManager implements EventObserver{
+public class MovementManager {
     private final float playerSpeed = 300f;
     
     // Track which keys are currently pressed
@@ -12,8 +12,14 @@ public class MovementManager implements EventObserver{
     private boolean downPressed = false;
     private boolean spacePressed = false;
 
-    @Override
-    public void onNotify(Event event, Boolean isUp){
+    public void handleAiMovement() {
+        // AI movement logic here
+    }
+
+    public void handlePlayerInput(Entity entity, Event event, boolean isUp) {
+        if (entity == null) return;
+
+        // Update input state
         if (!isUp) { // Key Pressed
             switch (event) {
                 case PlayerLeft: 
@@ -50,21 +56,9 @@ public class MovementManager implements EventObserver{
                 	break;
             }
         }
-        //Entity player = <Set to player entity>
-        Entity player = null;
+
         // Update velocity based on current input state
-        updatePlayerVelocity(player);
-    }
-
-    @Override 
-    public void onNotify(Event event, Boolean up, int screenX, int screenY){
-        onNotify(event, up);
-        //change if need to have mouse inputs
-        return;
-    }
-
-    public void handleAiMovement() {
-        // AI movement logic here
+        updatePlayerVelocity(entity);
     }
 
     private void updatePlayerVelocity(Entity entity) {
