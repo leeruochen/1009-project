@@ -82,11 +82,9 @@ public class GameMaster extends ApplicationAdapter{
         player = (testEntity) entityManager.createEntity(EntityType.PLAYER);
         // this makes the camera follow the player entity
         camera.setTarget(player);
-        movementManager.setPlayer(player);
 
         //eventmanager adds entityManager as an event observer
 		eventManager.addObserver(entityManager);
-        eventManager.addObserver(movementManager);
 		
 		//entitymanager and movementmanager connected (aggregation relationship)
 		entityManager.setMovementManager(movementManager);

@@ -12,8 +12,6 @@ public class MovementManager implements EventObserver{
     private boolean downPressed = false;
     private boolean spacePressed = false;
 
-    private Entity player;
-
     @Override
     public void onNotify(Event event, Boolean isUp){
         if (!isUp) { // Key Pressed
@@ -52,6 +50,8 @@ public class MovementManager implements EventObserver{
                 	break;
             }
         }
+        //Entity player = <Set to player entity>
+        Entity player = null;
         // Update velocity based on current input state
         updatePlayerVelocity(player);
     }
@@ -90,11 +90,6 @@ public class MovementManager implements EventObserver{
         
     }
     
-    public void setPlayer(Entity player){
-        this.player = player;
-        return;
-    }
-
     // Call this when player dies, pauses, or something that doesnt involve user input
     public void resetInput() {
         leftPressed = false;
