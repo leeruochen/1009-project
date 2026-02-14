@@ -17,16 +17,21 @@ import github.com_1009project.abstractEngine.EntityType;
 import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.testEntity;
 import github.com_1009project.abstractEngine.EntityFactory;
+import github.com_1009project.abstractEngine.EventManager;
+import github.com_1009project.abstractEngine.MovementManager;
+import github.com_1009project.abstractEngine.Event;
+import com.badlogic.gdx.Input;
 
 import java.util.List;
 
 public class GameMaster extends ApplicationAdapter{
-    private EntityManager em;
+    private EntityManager entityManager;
     // private SceneManager sm;
-    // private EventManager em;
+    private EventManager eventManager;
+    private MovementManager movementManager;
     // private UIManager um;
-    private CollisionManager cm;
-    private AssetManager am;
+    private CollisionManager collisionManager;
+    private AssetManager assetManager;
     private CameraManager camera;
     private MapManager mapManager;
     private EntityFactory entityFactory;
@@ -44,11 +49,12 @@ public class GameMaster extends ApplicationAdapter{
     // this is our set up, to initialize our managers and variables
     @Override
     public void create() {
-        cm = new CollisionManager(128);
+        collisionManager = new CollisionManager(128);
         batch = new SpriteBatch();
-        am = new AssetManager();
+        assetManager = new AssetManager();
         entityFactory = new EntityFactory();
-        em = new EntityManager(entityFactory);
+        entityManager = new EntityManager(entityFactory);
+        
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -58,8 +64,8 @@ public class GameMaster extends ApplicationAdapter{
         // update the asset manager to actually load the assets
         // finishLoading() makes sure all assets are loaded before proceeding
         loadAssets();
-        am.update();
-        am.finishLoading();
+        assetManager.update();
+        assetManager.finishLoading();
 
         // set up the map
         // scale the map if needed, if textures look small
@@ -67,15 +73,34 @@ public class GameMaster extends ApplicationAdapter{
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
         mapManager = new MapManager(camera.getCamera(), entityFactory);
         mapManager.setScale(4.0f); 
-        mapManager.setMap(am.get("maps/test.tmx", TiledMap.class));
+        mapManager.setMap(assetManager.get("maps/test.tmx", TiledMap.class));
         List<Entity> collisionLayer = mapManager.loadCollisionLayer("Collision");
-        em.addEntities(collisionLayer);
+        entityManager.addEntities(collisionLayer);
+        entityManager.addEntities(collisionLayer);
 
         // example of creating an entity and making it the target of the camera
-        player = new testEntity(200, 200, 50, 50, am.get("imgs/boy_down_1.png", Texture.class));
-        em.createEntity(EntityType.PLAYER);
+        player = new testEntity(200, 200, 50, 50, assetManager.get("imgs/boy_down_1.png", Texture.class));
+        entityManager.createEntity(EntityType.PLAYER);
         // this makes the camera follow the player entity
         camera.setTarget(player);
+
+        //eventmanager adds entityManager as an event observer
+		eventManager.addObserver(entityManager);
+		
+		//entitymanager and movementmanager connected (aggregation relationship)
+		entityManager.setMovementManager(movementManager);
+
+		//key mappings for eventManager
+		eventManager.mapKey(Input.Keys.W, Event.PlayerUp);
+		eventManager.mapKey(Input.Keys.S, Event.PlayerDown);
+		eventManager.mapKey(Input.Keys.A, Event.PlayerLeft);
+		eventManager.mapKey(Input.Keys.D, Event.PlayerRight);
+		eventManager.mapKey(Input.Keys.RIGHT, Event.PlayerRight);
+		eventManager.mapKey(Input.Keys.LEFT, Event.PlayerLeft);
+		eventManager.mapKey(Input.Keys.SPACE, Event.PlayerJump);
+
+		// Register input processor
+		Gdx.input.setInputProcessor(eventManager);
     }
 
     // our main gameplay/simulation loop
@@ -90,10 +115,10 @@ public class GameMaster extends ApplicationAdapter{
         // input manager would go here
 
         // update all entities
-        em.update(deltaTime);
+        entityManager.update(deltaTime);
 
         // update collisions
-        cm.updateCollision(em.getEntities());
+        collisionManager.updateCollision(entityManager.getEntities());
 
         // update camera position
         camera.cameraUpdate(deltaTime);
@@ -109,27 +134,28 @@ public class GameMaster extends ApplicationAdapter{
         // batch will render entities according to cameraPosition
         batch.setProjectionMatrix(camera.getCamera().combined);
         batch.begin();
-        for (Entity e : em.getEntities()) {e.render(batch);}
+        for (Entity e : entityManager.getEntities()) {e.render(batch);}
+        //ruo chen can try use entityManager.render here thanks
         batch.end();
     }
 
     private void loadAssets() {
         // load textures
-        am.load("imgs/boy_down_1.png", Texture.class);
+        assetManager.load("imgs/boy_down_1.png", Texture.class);
 
         // load tmx maps, params required to prevent errors
-        am.setLoader(TiledMap.class, new TmxMapLoader());
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader());
         TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
         params.projectFilePath = "maps/test.tiled-project";
-        am.load("maps/test.tmx", TiledMap.class, params);
+        assetManager.load("maps/test.tmx", TiledMap.class, params);
     }
 
     @Override
     public void dispose() {
-        am.dispose();
+        assetManager.dispose();
         batch.dispose();
         mapManager.dispose();
-        cm.dispose();
+        collisionManager.dispose();
     }
 }
 

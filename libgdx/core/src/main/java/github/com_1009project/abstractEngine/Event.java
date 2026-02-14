@@ -3,6 +3,8 @@ package github.com_1009project.abstractEngine;
 public enum Event {
     PlayerJump,
     PlayerRight,
-    PlayerLeft
+    PlayerLeft,
+    PlayerUp,
+    PlayerDown
     // These are placeholders
 }
