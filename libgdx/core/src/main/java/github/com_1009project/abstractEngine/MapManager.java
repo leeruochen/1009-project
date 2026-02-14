@@ -14,14 +14,16 @@ import java.util.List;
 
 public class MapManager extends Layer implements Disposable {
 
+    private final EntityFactory entityFactory;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private float map_scale;
 
-    public MapManager(OrthographicCamera camera) {
+    public MapManager(OrthographicCamera camera, EntityFactory entityFactory) {
         this.map_scale = 1.0f;
         this.camera = camera;
+        this.entityFactory = entityFactory;
     }
 
     public void setScale(float scale) {
@@ -46,7 +48,7 @@ public class MapManager extends Layer implements Disposable {
         renderer.render();
     }
 
-    public List<Entity> parseCollisionLayer(String layerName) {
+    public List<Entity> loadCollisionLayer(String layerName) {
         // get "layerName" layer from the map
         MapLayer collisionLayer = map.getLayers().get(layerName);
         List<Entity> entities = new ArrayList<>();
@@ -57,15 +59,19 @@ public class MapManager extends Layer implements Disposable {
             for (MapObject object : collisionLayer.getObjects()) {
                 if (object instanceof RectangleMapObject) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                    Entity box = entityFactory.createEntity(EntityType.COLLISION_BOX);
 
-                    // if scale is set, apply it to the rectangle dimensions
+                    // if scale is set, apply it to the rectangle dimensions, and set the position and size of the collision box accordingly
                     float scaledHeight = rect.height * map_scale;
                     float scaledWidth = rect.width * map_scale;
                     float scaledX = rect.x * map_scale;
                     float scaledY = rect.y * map_scale;
 
+                    box.setPosition(scaledX, scaledY);
+                    box.setSize(scaledWidth, scaledHeight);
+
                     // create entity and add to entities list
-                    entities.add(new CollisionBox(scaledX, scaledY, scaledWidth, scaledHeight));
+                    entities.add(box);
                 }
             }
         }

@@ -13,10 +13,11 @@ import github.com_1009project.abstractEngine.CameraManager;
 import github.com_1009project.abstractEngine.CollisionManager;
 import github.com_1009project.abstractEngine.MapManager;
 import github.com_1009project.abstractEngine.EntityManager;
+import github.com_1009project.abstractEngine.EntityType;
 import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.testEntity;
+import github.com_1009project.abstractEngine.EntityFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameMaster extends ApplicationAdapter{
@@ -28,6 +29,7 @@ public class GameMaster extends ApplicationAdapter{
     private AssetManager am;
     private CameraManager camera;
     private MapManager mapManager;
+    private EntityFactory entityFactory;
     private SpriteBatch batch;
     private testEntity player;
 
@@ -45,8 +47,8 @@ public class GameMaster extends ApplicationAdapter{
         cm = new CollisionManager(128);
         batch = new SpriteBatch();
         am = new AssetManager();
-        em = new EntityManager(new EntityFactory());
-        
+        entityFactory = new EntityFactory();
+        em = new EntityManager(entityFactory);
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -63,15 +65,15 @@ public class GameMaster extends ApplicationAdapter{
         // scale the map if needed, if textures look small
         // load the map from file
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
-        mapManager = new MapManager(camera.getCamera());
+        mapManager = new MapManager(camera.getCamera(), entityFactory);
         mapManager.setScale(4.0f); 
         mapManager.setMap(am.get("maps/test.tmx", TiledMap.class));
-        List<Entity> collisionLayer = mapManager.parseCollisionLayer("Collision");
+        List<Entity> collisionLayer = mapManager.loadCollisionLayer("Collision");
         em.addEntities(collisionLayer);
 
         // example of creating an entity and making it the target of the camera
         player = new testEntity(200, 200, 50, 50, am.get("imgs/boy_down_1.png", Texture.class));
-        em.createEntity(player);
+        em.createEntity(EntityType.PLAYER);
         // this makes the camera follow the player entity
         camera.setTarget(player);
     }
@@ -116,6 +118,7 @@ public class GameMaster extends ApplicationAdapter{
         am.load("imgs/boy_down_1.png", Texture.class);
 
         // load tmx maps, params required to prevent errors
+        am.setLoader(TiledMap.class, new TmxMapLoader());
         TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
         params.projectFilePath = "maps/test.tiled-project";
         am.load("maps/test.tmx", TiledMap.class, params);
@@ -125,6 +128,8 @@ public class GameMaster extends ApplicationAdapter{
     public void dispose() {
         am.dispose();
         batch.dispose();
+        mapManager.dispose();
+        cm.dispose();
     }
 }
 

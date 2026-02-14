@@ -101,4 +101,13 @@ public class SpatialHashGrid {
         // then combine them with or
         return (((long)x) << 32) | (y & 0xffffffffL);
     }
+
+    public void dispose() {
+        // clear all buckets to free memory
+        for (Array<Entity> bucket : buckets.values()) {
+            bucket.clear();
+        }
+        buckets.clear();
+        potentialColliders.clear();
+    }
 }

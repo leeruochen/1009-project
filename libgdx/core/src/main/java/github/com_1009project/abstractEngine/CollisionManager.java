@@ -40,4 +40,8 @@ public class CollisionManager {
             }
         }
     }
+
+    public void dispose() {
+        grid.dispose();
+    }
 }
