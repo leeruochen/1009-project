@@ -17,14 +17,23 @@ public class testEntity extends Entity {
         this.setSize(w, h);
         this.createCollisionComponent(20, 10, 15, 0);
         this.texture = texture;
+        this.setMaxSpeed(300f);
+        this.setAcceleration(new Vector2(0,0));
+        this.setFriction(0.85f);
+        this.setOnGround(true);
     }
 
     @Override
     public void updateMovement(float deltaTime) {
-        if (Gdx.input.isKeyPressed(Keys.W)) { this.getPosition().y += speed * deltaTime; }
-        if (Gdx.input.isKeyPressed(Keys.S)) { this.getPosition().y -= speed * deltaTime; }
-        if (Gdx.input.isKeyPressed(Keys.A)) { this.getPosition().x -= speed * deltaTime; }
-        if (Gdx.input.isKeyPressed(Keys.D)) { this.getPosition().x += speed * deltaTime; }
+        Vector2 vel = this.getVelocity();
+        
+        // for diagonal movement
+        if (vel.len() > this.getMaxSpeed()) {
+            vel.setLength(this.getMaxSpeed());
+        }
+        
+        // Update position
+        this.getPosition().add(vel.x * delta, vel.y * delta);
     }
 
     @Override
