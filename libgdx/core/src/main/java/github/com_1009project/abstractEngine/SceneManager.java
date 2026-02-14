@@ -8,7 +8,7 @@ import com.badlogic.gdx.assets.AssetManager;
 public class SceneManager {
     private Map<Integer, Scene> scenes = new HashMap<>();
     private Scene currentScene;
-    private AssetManager resourceManager; // Reference to ResourceManager
+    private AssetManager resourceManager; //reference to resource manager to pass to scenes
     private EntityManager entityManager;
     private EventManager eventManager;
 
@@ -19,16 +19,16 @@ public class SceneManager {
     }
     public void loadScene(int id) {
         Scene scene = new Scene(id, resourceManager, entityManager, eventManager);
-        scene.init();
         scenes.put(id, scene);
     }
     public void switchScene(int id) {
         if (currentScene != null) {
-            currentScene.dispose();
+            currentScene.onExit();
         }
         currentScene = scenes.get(id);
         if (currentScene != null) {
             currentScene.init();
+            currentScene.onEnter();
         }
     }
     public void updateScene(float deltaTime) {
