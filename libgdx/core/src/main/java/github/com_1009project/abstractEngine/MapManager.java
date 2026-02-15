@@ -34,6 +34,10 @@ public class MapManager extends Layer implements Disposable {
         this.map = map;
         this.renderer = new OrthogonalTiledMapRenderer(map, map_scale);
     }
+    
+    public TiledMap getMap() {
+        return this.map;
+    }
 
     public void update(float deltaTime) {
     }

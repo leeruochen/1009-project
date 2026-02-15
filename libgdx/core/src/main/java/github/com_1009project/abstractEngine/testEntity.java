@@ -54,10 +54,9 @@ public class testEntity extends Entity {
             }
             else if (other instanceof CollisionBox) {
                 this.setPosition(this.getPreviousPosition().x, this.getPreviousPosition().y);
+                this.getCollisionComponent().updateBounds(this.getPosition());
                 this.hasCollided = true;
             }
         }
-
-        this.getCollisionComponent().updateBounds(this.getPosition());
     }
 }

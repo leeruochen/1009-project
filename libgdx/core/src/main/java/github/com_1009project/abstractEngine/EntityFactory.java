@@ -25,12 +25,7 @@ public class EntityFactory {
     }
 
     public Entity createEntity(MapObject object, float mapScale) {
-
         String type = object.getProperties().get("type", String.class);
-
-        if (type!= null) {
-            System.out.println("Creating entity of type: " + type);
-        } 
 
         RectangleMapObject rectObj = (RectangleMapObject) object;
         Rectangle rect = rectObj.getRectangle();
@@ -50,10 +45,6 @@ public class EntityFactory {
                 return new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
 
             case "Door":
-                // String targetMap = object.getProperties().get("targetMap", String.class);
-                // int spawnX = object.getProperties().get("spawnX", Integer.class);
-                // int spawnY = object.getProperties().get("spawnY", Integer.class);
-
                 return new Door(x, y, width, height);
 
             case "CollisionBox":
