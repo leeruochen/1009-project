@@ -15,7 +15,6 @@ public class EntityManager implements EventObserver {
 
     private final EntityFactory factory;
     private MovementManager movementManager;
-    private EventManager eventManager;
 
     public EntityManager(AssetManager assetManager) {
         this.factory = new EntityFactory(assetManager);
@@ -86,10 +85,6 @@ public class EntityManager implements EventObserver {
 			}
 		}
 	}
-	
-    public void setEventManager(EventManager eventManager){
-        this.eventManager = eventManager;
-    }
 
 	//reference to movementManager in GameMaster
 	public void setMovementManager(MovementManager movementManager) {
