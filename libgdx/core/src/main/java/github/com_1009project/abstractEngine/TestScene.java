@@ -25,4 +25,10 @@ public class TestScene extends Scene {
         super.render();
         System.out.println("Rendering TestScene");
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        System.out.println("Disposed TestScene");
+    }
 }

@@ -18,6 +18,7 @@ import github.com_1009project.abstractEngine.testEntity;
 import github.com_1009project.abstractEngine.EventManager;
 import github.com_1009project.abstractEngine.MovementManager;
 import github.com_1009project.abstractEngine.SceneManager;
+import github.com_1009project.abstractEngine.TestScene;
 import github.com_1009project.abstractEngine.UIFactory;
 import github.com_1009project.abstractEngine.Event;
 import com.badlogic.gdx.Input;
@@ -123,6 +124,10 @@ public class GameMaster extends ApplicationAdapter{
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         // input manager would go here
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            sm.switchScene(1);
+        } // this is to test scene switching, can be removed later
 
         // update all entities
         entityManager.update(deltaTime);
