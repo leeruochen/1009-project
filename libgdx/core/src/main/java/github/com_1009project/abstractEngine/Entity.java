@@ -3,7 +3,7 @@ package github.com_1009project.abstractEngine;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Entity {
+public abstract class Entity implements Moveable{
     // properties fields to be used by subclasses
     private static int idCounter = 0;
     private int id; 
@@ -20,6 +20,7 @@ public abstract class Entity {
     private boolean isPersistent;
     private boolean inputEnabled;
     private boolean onGround;
+    private MovementComponent movementComponent;
 
     public Entity() { // constructor to initialize the entity with defaults
         this.id = idCounter++; // id's are sequentially assigned
@@ -35,13 +36,15 @@ public abstract class Entity {
         this.inputEnabled = true;
         this.onGround = true;
         this.collisionComponent = null; 
-        
+        this.movementComponent = new MovementComponent();
     }
 
     // to render the entity
     public abstract void render(SpriteBatch batch);
     // to update the entity's movement
-    public abstract void updateMovement(float deltaTime);
+    public void updateMovement(float delta) { //from moveable interface
+    	//let entities override this method, they should their own unique movement
+    }
 
     // this will be called every frame to update the entity
     public void update(float deltaTime){
@@ -90,14 +93,14 @@ public abstract class Entity {
     public float getRotation() {return rotation;}
     public int getId() {return id;}
     public Vector2 getPreviousPosition() {return previousPosition;}
-    public Vector2 getVelocity() { return velocity; }
-    public void setVelocity(Vector2 velocity) { this.velocity = velocity; }
-    public Vector2 getAcceleration() { return acceleration; }
-    public void setAcceleration(Vector2 acceleration) { this.acceleration = acceleration; }
-    public float getMaxSpeed() { return maxSpeed; }
-    public void setMaxSpeed(float maxSpeed) { this.maxSpeed = maxSpeed; }
-    public float getFriction() { return friction; }
-    public void setFriction(float friction) { this.friction = friction;}
+    public Vector2 getVelocity() { return movementComponent.getVelocity(); }
+    public void setVelocity(Vector2 velocity) { movementComponent.setVelocity(velocity); }
+    public Vector2 getAcceleration() { return movementComponent.getAcceleration(); }
+    public void setAcceleration(Vector2 acceleration) { movementComponent.setAcceleration(acceleration); }
+    public float getMaxSpeed() { return movementComponent.getMaxSpeed(); }
+    public void setMaxSpeed(float speed) { movementComponent.setMaxSpeed(speed); }
+    public float getFriction() { return movementComponent.getFriction(); }
+    public void setFriction(float friction) { movementComponent.setFriction(friction); }
     public boolean isActive() { return active;}
     public void setActive(boolean active) { this.active = active;}
     public boolean getPersistent() {return isPersistent;}
