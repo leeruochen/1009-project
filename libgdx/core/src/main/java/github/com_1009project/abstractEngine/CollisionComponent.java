@@ -19,7 +19,7 @@ public class CollisionComponent {
 
     public Rectangle getBounds() { 
         // getter for the bounding rectangle
-        return bounds;
+        return new Rectangle(this.bounds);
     }
 
     public void setActive(boolean active) { 

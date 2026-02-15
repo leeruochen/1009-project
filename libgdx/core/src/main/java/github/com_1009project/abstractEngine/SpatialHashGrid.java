@@ -92,7 +92,7 @@ public class SpatialHashGrid {
                 }
             }
         }
-        return potentialColliders;
+        return new Array<>(potentialColliders);
     }
 
     private long getKey(int x, int y) {
