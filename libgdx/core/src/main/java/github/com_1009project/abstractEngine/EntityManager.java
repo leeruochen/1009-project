@@ -15,7 +15,6 @@ public class EntityManager implements EventObserver {
 
     private final EntityFactory factory;
     private MovementManager movementManager;
-
     private EventManager eventManager;
 
     public EntityManager(AssetManager assetManager) {

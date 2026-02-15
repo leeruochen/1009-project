@@ -13,18 +13,14 @@ import github.com_1009project.abstractEngine.CameraManager;
 import github.com_1009project.abstractEngine.CollisionManager;
 import github.com_1009project.abstractEngine.MapManager;
 import github.com_1009project.abstractEngine.EntityManager;
-import github.com_1009project.abstractEngine.EntityType;
 import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.testEntity;
-import github.com_1009project.abstractEngine.EntityFactory;
 import github.com_1009project.abstractEngine.EventManager;
 import github.com_1009project.abstractEngine.MovementManager;
 import github.com_1009project.abstractEngine.SceneManager;
 import github.com_1009project.abstractEngine.UIFactory;
 import github.com_1009project.abstractEngine.Event;
 import com.badlogic.gdx.Input;
-
-import java.util.List;
 
 public class GameMaster extends ApplicationAdapter{
     private EntityManager entityManager;
@@ -78,7 +74,7 @@ public class GameMaster extends ApplicationAdapter{
         mapManager.setScale(4.0f); 
         mapManager.setMap(assetManager.get("maps/test.tmx", TiledMap.class));
         // mapManager.loadCollisionLayer("Collision");
-        mapManager.loadEntities(assetManager.get("maps/test.tmx", TiledMap.class), entityManager, camera);
+        mapManager.loadEntities();
 
         // example of creating an entity and making it the target of the camera
         // player = (testEntity) entityManager.createEntity(EntityType.PLAYER);

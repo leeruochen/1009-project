@@ -3,10 +3,8 @@ package github.com_1009project.abstractEngine;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.Gdx;
 //https://libgdx.com/wiki/graphics/2d/tile-maps
@@ -18,7 +16,6 @@ public class MapManager extends Layer implements Disposable {
     private OrthogonalTiledMapRenderer renderer;
     private float map_scale;
     private OrthographicCamera staticCam;
-    private Iterable<MapLayer> mapLayers;
 
     public MapManager(EntityManager entityManager) {
         this.map_scale = 1.0f;
@@ -56,8 +53,7 @@ public class MapManager extends Layer implements Disposable {
         renderer.render();
     }
 
-    public void loadEntities(TiledMap map, EntityManager entityManager, CameraManager camera) {
-
+    public void loadEntities() {
         Iterable<MapLayer> mapLayers = map.getLayers();
         for (MapLayer layer : mapLayers) {
             for (MapObject object : layer.getObjects()) {
