@@ -7558,7 +7558,7 @@
    eJzt08ENQUEYRtG3Iei/ECWgA4pAB9iZHogbmXOTfznJd17yjqtluUx653GncbN24OfnnzZ+fv56Rden/ut4ext3/9Nv+Kn/Md4+x70m9W/Wy7Idt1t/b9Mv8//z89cruvj5+esVXfz8/PWKLn5+/npFFz8/f72ii5+fv17Rxc/PX6/o4ufnr1d08fPz1yu6+Pn56xVd/Pz89Youfn7+ekUXP/9+8nsD8w/Ivw==
   </data>
  </layer>
- <objectgroup id="58" name="COLLISION_BOX">
+ <objectgroup id="58" name="CollisionBox">
   <object id="2" x="329" y="223.667" width="207.333" height="16"/>
   <object id="3" x="329" y="239.333" width="6.66667" height="128"/>
   <object id="4" x="335.667" y="351.667" width="119.667" height="15.6667"/>

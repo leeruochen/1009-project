@@ -15,7 +15,7 @@ public class testEntity extends Entity {
         super();
         this.setPosition(x, y);
         this.setSize(w, h);
-        this.createCollisionComponent(w, h, 15, 0);
+        this.createCollisionComponent(20, 10, 15, 0);
         this.texture = texture;
         this.setMaxSpeed(1000f);
         this.setAcceleration(new Vector2(0,0));
