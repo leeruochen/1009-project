@@ -36,7 +36,6 @@ public class GameMaster extends ApplicationAdapter{
     private AssetManager assetManager;
     private CameraManager camera;
     private MapManager mapManager;
-    private EntityFactory entityFactory;
     private SpriteBatch batch;
     private testEntity player;
 
@@ -54,8 +53,7 @@ public class GameMaster extends ApplicationAdapter{
         collisionManager = new CollisionManager(128);
         batch = new SpriteBatch();
         assetManager = new AssetManager();
-        entityFactory = new EntityFactory();
-        entityManager = new EntityManager(entityFactory, assetManager);
+        entityManager = new EntityManager(assetManager);
         eventManager = new EventManager();
         movementManager = new MovementManager();
         sm = new SceneManager(assetManager, entityManager, eventManager);

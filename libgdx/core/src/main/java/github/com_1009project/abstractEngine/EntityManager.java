@@ -17,8 +17,8 @@ public class EntityManager implements EventObserver {
     private AssetManager assetManager;
     private EventManager eventManager;
 
-    public EntityManager(EntityFactory factory, AssetManager assetManager) {
-        this.factory = factory;
+    public EntityManager(AssetManager assetManager) {
+        this.factory = new EntityFactory(assetManager);
         this.assetManager = assetManager;
     }
 
