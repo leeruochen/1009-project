@@ -126,6 +126,4 @@ public abstract class Entity {
     public void setOnGround(boolean onGround) {
         this.onGround = onGround;
     }
-
-    public Entity copy(){return this;}; // method for creating a copy of the entity
 }

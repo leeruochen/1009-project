@@ -9,21 +9,19 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.Gdx;
-import java.util.ArrayList;
-import java.util.List;
 //https://libgdx.com/wiki/graphics/2d/tile-maps
 
 public class MapManager extends Layer implements Disposable {
 
-    private final EntityFactory entityFactory;
+    private EntityManager entityManager;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private float map_scale;
     private OrthographicCamera staticCam;
 
-    public MapManager(EntityFactory entityFactory) {
+    public MapManager(EntityManager entityManager) {
         this.map_scale = 1.0f;
-        this.entityFactory = entityFactory;
+        this.entityManager = entityManager;
         this.staticCam = new OrthographicCamera();
         this.staticCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
@@ -57,10 +55,9 @@ public class MapManager extends Layer implements Disposable {
         renderer.render();
     }
 
-    public List<Entity> loadCollisionLayer(String layerName) {
+    public void loadCollisionLayer(String layerName) {
         // get "layerName" layer from the map
         MapLayer collisionLayer = map.getLayers().get(layerName);
-        List<Entity> entities = new ArrayList<>();
 
         // gets every object in the layer, if the object is a rectangle, create a collision box.
         // developers should only use rectangle objects for collision layers.
@@ -68,23 +65,16 @@ public class MapManager extends Layer implements Disposable {
             for (MapObject object : collisionLayer.getObjects()) {
                 if (object instanceof RectangleMapObject) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    Entity box = entityFactory.createEntity(EntityType.COLLISION_BOX);
-
                     // if scale is set, apply it to the rectangle dimensions, and set the position and size of the collision box accordingly
                     float scaledHeight = rect.height * map_scale;
                     float scaledWidth = rect.width * map_scale;
                     float scaledX = rect.x * map_scale;
                     float scaledY = rect.y * map_scale;
 
-                    box.setPosition(scaledX, scaledY);
-                    box.setSize(scaledWidth, scaledHeight);
-
-                    // create entity and add to entities list
-                    entities.add(box);
+                    entityManager.createLayerEntity(EntityType.COLLISION_BOX, scaledX, scaledY, scaledWidth, scaledHeight);
                 }
             }
         }
-        return entities;
     }
 
     public OrthographicCamera getCamera() {

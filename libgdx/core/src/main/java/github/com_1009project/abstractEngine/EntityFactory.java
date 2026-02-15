@@ -14,10 +14,10 @@ public class EntityFactory {
         }
     }
 
-    public Entity createEntity(EntityType type) { //overloaded method for collision boxes that don't need asset manager
+    public Entity createEntity(EntityType type, float x, float y, float width, float height) { //overloaded method for collision boxes that don't need asset manager
         switch (type) {
             case COLLISION_BOX:
-                return new CollisionBox(0, 0, 0, 0);
+                return new CollisionBox(x, y, width, height);
             // Add cases for other entity types as needed
             default:
                 return null;

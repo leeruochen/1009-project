@@ -30,6 +30,14 @@ public class EntityManager implements EventObserver {
         return entity;
     }
 
+    // Used for entity creation for map layers
+    public Entity createLayerEntity(EntityType type, float x, float y, float width, float height) {
+        Entity entity = factory.createEntity(type, x , y, width, height);
+
+        entities.add(entity);
+        return entity;
+    }
+
     // Marks an entity for removal at the end of the current update cycle
     public void markForRemoval(Entity entity) {
         if (!toRemove.contains(entity)) {
@@ -61,13 +69,6 @@ public class EntityManager implements EventObserver {
     // getter for entities
     public List<Entity> getEntities() {
         return Collections.unmodifiableList(entities);
-    }
-
-    // add entities to the manager
-    public void addEntities(List<Entity> newEntities) {
-        for (Entity e : newEntities) {
-            entities.add(e.copy());
-        }
     }
 
     public void clear() {
