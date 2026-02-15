@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="62" nextobjectid="88">
+=======
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="62" nextobjectid="91">
+>>>>>>> fd605aea5a9414832edf32cf1ddac582df1080d0
  <tileset firstgid="1" name="ground_grass_details" tilewidth="16" tileheight="16" tilecount="378" columns="21">
   <image source="Tiled_files/ground_grass_details.png" width="336" height="288"/>
  </tileset>
@@ -7626,5 +7630,14 @@
   <object id="83" x="656" y="288" width="32" height="32"/>
   <object id="84" x="528" y="416" width="48" height="48"/>
   <object id="85" x="320" y="416" width="32" height="48"/>
+ </objectgroup>
+ <objectgroup id="61" name="Door">
+  <object id="90" name="Door" type="Door" x="447.333" y="270" width="32" height="34">
+   <properties>
+    <property name="spawnX" type="int" value="0"/>
+    <property name="spawnY" type="int" value="0"/>
+    <property name="targetMap" value="house_interior.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

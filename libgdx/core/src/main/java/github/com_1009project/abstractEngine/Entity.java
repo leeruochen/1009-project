@@ -100,30 +100,16 @@ public abstract class Entity {
     public void setFriction(float friction) { this.friction = friction;}
     public boolean isActive() { return active;}
     public void setActive(boolean active) { this.active = active;}
+    public boolean getPersistent() {return isPersistent;}
+    public void setPersistent(boolean persistent) {this.isPersistent = persistent;}
+    public boolean isInputEnabled() {return inputEnabled;}
+    public void setInputEnabled(boolean inputEnabled) {this.inputEnabled = inputEnabled;}
+    public boolean isOnGround() {return onGround;}
+    public void setOnGround(boolean onGround) {this.onGround = onGround;}
 
     public void onDestroy(){} // method to be called when the entity is destroyed, can be overridden by subclasses for cleanup
     
-    public boolean getPersistent() {
-        return isPersistent;
-    }
 
-    public void setPersistent(boolean persistent) {
-        this.isPersistent = persistent;
-    }
 
-    public boolean isInputEnabled() {
-    	return inputEnabled;
-    }
-    
-    public void setInputEnabled(boolean inputEnabled) {
-    	this.inputEnabled = inputEnabled;
-    }
-    
-    public boolean isOnGround() {
-        return onGround;
-    }
-    
-    public void setOnGround(boolean onGround) {
-        this.onGround = onGround;
-    }
+    public Entity copy(){return this;}; // method for creating a copy of the entity
 }

@@ -1,9 +1,7 @@
 package github.com_1009project.abstractEngine;
 
 public enum EntityType {
-    TRIANGLE,
-    SQUARE,
-    CIRCLE,
     COLLISION_BOX,
-    PLAYER
+    PLAYER,
+    DOOR
 }
