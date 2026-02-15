@@ -1,8 +1,8 @@
 {
-    "activeFile": "tests.tmx",
+    "activeFile": "test.tmx",
     "expandedProjectPaths": [
-        ".",
-        "Tiled_files"
+        "Tiled_files",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -31,11 +31,11 @@
             "expandedObjectLayers": [
                 61
             ],
-            "scale": 3,
+            "scale": 11,
             "selectedLayer": 15,
             "viewCenter": {
-                "x": 464,
-                "y": 312.66666666666663
+                "x": 463.54545454545456,
+                "y": 322.3636363636364
             }
         },
         "test.tmx#Doors_windows_animation": {
@@ -113,8 +113,8 @@
     ],
     "project": "test.tiled-project",
     "recentFiles": [
-        "test.tmx",
         "tests.tmx",
+        "test.tmx",
         "test2.tmx",
         "Tiled_files/Interior1.tmx"
     ]

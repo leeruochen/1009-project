@@ -7633,6 +7633,6 @@
     <property name="targetMap" value="maps/tests.tmx"/>
    </properties>
   </object>
-  <object id="92" name="Player" type="Player" x="160" y="898" width="11.6666" height="12.6667"/>
+  <object id="92" name="Player" type="Player" x="457.182" y="304.545" width="11.6666" height="12.6667"/>
  </objectgroup>
 </map>
