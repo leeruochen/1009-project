@@ -21,10 +21,13 @@ public class BackgroundLayer extends Layer {
     //     this.batch = new SpriteBatch();
     // }
 
-    public BackgroundLayer(String filepath) {
-        background = new Texture("imgs/background.png");
-        batch = new SpriteBatch();
-
+    public BackgroundLayer(SpriteBatch batch, AssetManager resourceManager, String filepath) {
+        this.batch = batch;
+        if (!resourceManager.isLoaded(filepath)) {
+            resourceManager.load(filepath, Texture.class);
+            resourceManager.finishLoading();
+        }
+        this.background = resourceManager.get(filepath, Texture.class);
     }
 
     @Override
@@ -41,7 +44,9 @@ public class BackgroundLayer extends Layer {
 
     @Override
     public void dispose() {
-        batch.dispose();
+        if (background != null) {
+            background.dispose();
+        }
     }
 
 }

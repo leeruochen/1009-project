@@ -1,17 +1,20 @@
 package github.com_1009project.abstractEngine;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TestScene extends Scene {
-    public TestScene(int id, AssetManager resourceManager, EntityManager entityManager, EventManager eventManager) {
-        super(id, resourceManager, entityManager, eventManager);
+    public TestScene(int id, AssetManager resourceManager,
+                     EntityManager entityManager, EventManager eventManager,
+                     SpriteBatch batch) {
+        super(id, resourceManager, entityManager, eventManager, batch);
     }
 
     @Override
     public void init() {
-        super.init(); // keep default layers
-        System.out.println("TestScene initialized with default layers");
-        // Add extra test-specific layers or entities here if needed
+        super.init(); // adds BackgroundLayer, EntityLayer, UILayer
+        layers.add(new MapManager(entityManager)); // add map manager too
+        System.out.println("TestScene initialized");
     }
 
     @Override
@@ -23,7 +26,6 @@ public class TestScene extends Scene {
     @Override
     public void render() {
         super.render();
-        System.out.println("Rendering TestScene");
     }
 
     @Override
