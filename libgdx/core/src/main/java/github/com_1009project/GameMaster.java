@@ -77,10 +77,11 @@ public class GameMaster extends ApplicationAdapter{
         mapManager = new MapManager(entityManager);
         mapManager.setScale(4.0f); 
         mapManager.setMap(assetManager.get("maps/test.tmx", TiledMap.class));
-        mapManager.loadCollisionLayer("Collision");
+        // mapManager.loadCollisionLayer("Collision");
+        mapManager.loadEntities(assetManager.get("maps/test.tmx", TiledMap.class), entityManager);
 
         // example of creating an entity and making it the target of the camera
-        player = (testEntity) entityManager.createEntity(EntityType.PLAYER);
+        // player = (testEntity) entityManager.createEntity(EntityType.PLAYER);
         // this makes the camera follow the player entity
         camera.setTarget(player);
 

@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
 
 public class EntityManager implements EventObserver {
 
@@ -22,19 +23,28 @@ public class EntityManager implements EventObserver {
         this.assetManager = assetManager;
     }
 
-    // Creates a new entity of the specified type, adds it to the manager, and returns it
-    public Entity createEntity(EntityType type) {
-        Entity entity = factory.createEntity(type, assetManager);
+    // // Creates a new entity of the specified type, adds it to the manager, and returns it
+    // public Entity createEntity(EntityType type) {
+    //     Entity entity = factory.createEntity(type);
 
-        entities.add(entity);
-        return entity;
-    }
+    //     entities.add(entity);
+    //     return entity;
+    // }
 
-    // Used for entity creation for map layers
-    public Entity createLayerEntity(EntityType type, float x, float y, float width, float height) {
-        Entity entity = factory.createEntity(type, x , y, width, height);
+    // // Used for entity creation for map layers
+    // public Entity createLayerEntity(EntityType type, float x, float y, float width, float height) {
+    //     Entity entity = factory.createEntity(type, x , y, width, height);
 
-        entities.add(entity);
+    //     entities.add(entity);
+    //     return entity;
+    // }
+
+    public Entity createEntity(MapObject object) {
+        Entity entity = factory.createEntity(object);
+
+        if (entity != null) {
+            entities.add(entity);
+        }
         return entity;
     }
 

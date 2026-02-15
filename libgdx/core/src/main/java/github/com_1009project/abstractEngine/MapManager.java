@@ -55,27 +55,45 @@ public class MapManager extends Layer implements Disposable {
         renderer.render();
     }
 
-    public void loadCollisionLayer(String layerName) {
-        // get "layerName" layer from the map
-        MapLayer collisionLayer = map.getLayers().get(layerName);
+    // public void loadCollisionLayer(String layerName) {
+    //     // get "layerName" layer from the map
+    //     MapLayer collisionLayer = map.getLayers().get(layerName);
 
-        // gets every object in the layer, if the object is a rectangle, create a collision box.
-        // developers should only use rectangle objects for collision layers.
-        if (collisionLayer != null) {
-            for (MapObject object : collisionLayer.getObjects()) {
-                if (object instanceof RectangleMapObject) {
-                    Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    // if scale is set, apply it to the rectangle dimensions, and set the position and size of the collision box accordingly
-                    float scaledHeight = rect.height * map_scale;
-                    float scaledWidth = rect.width * map_scale;
-                    float scaledX = rect.x * map_scale;
-                    float scaledY = rect.y * map_scale;
+    //     // gets every object in the layer, if the object is a rectangle, create a collision box.
+    //     // developers should only use rectangle objects for collision layers.
+    //     if (collisionLayer != null) {
+    //         for (MapObject object : collisionLayer.getObjects()) {
+    //             if (object instanceof RectangleMapObject) {
+    //                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
+    //                 // if scale is set, apply it to the rectangle dimensions, and set the position and size of the collision box accordingly
+    //                 float scaledHeight = rect.height * map_scale;
+    //                 float scaledWidth = rect.width * map_scale;
+    //                 float scaledX = rect.x * map_scale;
+    //                 float scaledY = rect.y * map_scale;
 
-                    entityManager.createLayerEntity(EntityType.COLLISION_BOX, scaledX, scaledY, scaledWidth, scaledHeight);
-                }
-            }
+    //                 entityManager.createLayerEntity(EntityType.COLLISION_BOX, scaledX, scaledY, scaledWidth, scaledHeight);
+    //             }
+    //         }
+    //     }
+    // }
+
+    public void loadEntities(TiledMap map, EntityManager entityManager) {
+
+        MapLayer layer = map.getLayers().get("Entities");
+
+        for (MapObject object : layer.getObjects()) {
+
+            entityManager.createEntity(object);
+        }
+
+        MapLayer layer2 = map.getLayers().get("Collision");
+
+        for (MapObject object : layer2.getObjects()) {
+
+            entityManager.createEntity(object);
         }
     }
+
 
     public OrthographicCamera getCamera() {
         return staticCam;
