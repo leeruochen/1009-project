@@ -12,10 +12,6 @@ public class MovementManager {
     private boolean downPressed = false;
     private boolean spacePressed = false;
 
-    public void handleAiMovement() {
-        // AI movement logic here
-    }
-
     public void handlePlayerInput(Entity entity, Event event, boolean isUp) {
         if (entity == null) return;
 
