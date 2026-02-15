@@ -15,32 +15,23 @@ public class EntityManager implements EventObserver {
 
     private final EntityFactory factory;
     private MovementManager movementManager;
-    private AssetManager assetManager;
+
     private EventManager eventManager;
 
     public EntityManager(AssetManager assetManager) {
         this.factory = new EntityFactory(assetManager);
-        this.assetManager = assetManager;
     }
 
-    // // Creates a new entity of the specified type, adds it to the manager, and returns it
-    // public Entity createEntity(EntityType type) {
-    //     Entity entity = factory.createEntity(type);
+    // Creates a new entity of the specified type, adds it to the manager, and returns it
+    public Entity createEntity(EntityType type) {
+        Entity entity = factory.createEntity(type);
 
-    //     entities.add(entity);
-    //     return entity;
-    // }
+        entities.add(entity);
+        return entity;
+    }
 
-    // // Used for entity creation for map layers
-    // public Entity createLayerEntity(EntityType type, float x, float y, float width, float height) {
-    //     Entity entity = factory.createEntity(type, x , y, width, height);
-
-    //     entities.add(entity);
-    //     return entity;
-    // }
-
-    public Entity createEntity(MapObject object) {
-        Entity entity = factory.createEntity(object);
+    public Entity createEntity(MapObject object, float map_scale) {
+        Entity entity = factory.createEntity(object, map_scale);
 
         if (entity != null) {
             entities.add(entity);
