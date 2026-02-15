@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SceneManager {
     private Map<Integer, Scene> scenes = new HashMap<>();
@@ -11,11 +12,17 @@ public class SceneManager {
     private AssetManager resourceManager; // reference to resource manager to pass to scenes
     private EntityManager entityManager;
     private EventManager eventManager;
+    private SpriteBatch batch;
 
-    public SceneManager(AssetManager resourceManager, EntityManager entityManager, EventManager eventManager) {
+    public SceneManager(AssetManager resourceManager, EntityManager entityManager, EventManager eventManager, SpriteBatch batch) {
         this.resourceManager = resourceManager;
         this.entityManager = entityManager;
         this.eventManager = eventManager;
+        this.batch = batch;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
     }
 
     // Load a scene by ID (can be extended to load specific subclasses like TestScene)
@@ -27,10 +34,10 @@ public class SceneManager {
         Scene scene;
         if (id == 1) {
             // Example: load TestScene when ID = 1
-            scene = new TestScene(id, resourceManager, entityManager, eventManager);
+            scene = new TestScene(id, resourceManager, entityManager, eventManager, batch);
         } else {
             // fallback generic scene
-            scene = new Scene(id, resourceManager, entityManager, eventManager);
+            scene = new TestScene(id, resourceManager, entityManager, eventManager, batch);
         }
 
         scenes.put(id, scene);

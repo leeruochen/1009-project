@@ -53,9 +53,7 @@ public class GameMaster extends ApplicationAdapter{
         entityManager = new EntityManager(assetManager);
         eventManager = new EventManager();
         movementManager = new MovementManager();
-        sm = new SceneManager(assetManager, entityManager, eventManager);
-        
-        // sm = new SceneManager(assetManager, entityManager, eventManager);
+        sm = new SceneManager(assetManager, entityManager, eventManager, batch);
 
         // // Load two test scenes
         // sm.loadScene(1);
@@ -190,6 +188,7 @@ public class GameMaster extends ApplicationAdapter{
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
         TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
         params.projectFilePath = "maps/test.tiled-project";
+        assetManager.load("imgs/background.png", Texture.class);
         assetManager.load("maps/test.tmx", TiledMap.class, params);
         assetManager.load("maps/tests.tmx", TiledMap.class, params);
     }
