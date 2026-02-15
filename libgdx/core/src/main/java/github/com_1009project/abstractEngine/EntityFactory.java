@@ -18,6 +18,8 @@ public class EntityFactory {
         switch (type) {
             case COLLISION_BOX:
                 return new CollisionBox(x, y, width, height);
+            case DOOR:
+                return new Door(x, y, width, height);
             // Add cases for other entity types as needed
             default:
                 return null;

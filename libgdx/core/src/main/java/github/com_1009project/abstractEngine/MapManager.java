@@ -59,6 +59,8 @@ public class MapManager extends Layer implements Disposable {
         // get "layerName" layer from the map
         MapLayer layer = map.getLayers().get(layerName);
 
+        String name = layerName.toUpperCase(); // set the name of the layer to the name of the map layer, this will be used by the entity factory to determine what type of entity to create
+
         // gets every object in the layer, if the object is a rectangle, create a collision box.
         // developers should only use rectangle objects for collision layers.
         if (layer != null) {
@@ -71,7 +73,7 @@ public class MapManager extends Layer implements Disposable {
                     float scaledX = rect.x * map_scale;
                     float scaledY = rect.y * map_scale;
 
-                    entityManager.createLayerEntity(EntityType.valueOf(layerName.toUpperCase()), scaledX, scaledY, scaledWidth, scaledHeight);
+                    entityManager.createLayerEntity(EntityType.valueOf(name), scaledX, scaledY, scaledWidth, scaledHeight);
                 }
             }
         }

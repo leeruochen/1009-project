@@ -8,8 +8,5 @@ public class Door extends CollisionBox {
 
     @Override
     public void onCollision(Entity other) {
-        // Implement door-specific collision behavior here, e.g., transition to another map or level
-        System.out.println("Door collided with: " + other);
-        // Code for map change
     }
 }

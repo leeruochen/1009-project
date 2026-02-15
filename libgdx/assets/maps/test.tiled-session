@@ -6,11 +6,11 @@
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "test.tmx": {
-            "scale": 1.1615234374999999,
-            "selectedLayer": 0,
+            "scale": 5.5,
+            "selectedLayer": 14,
             "viewCenter": {
-                "x": 484.70825626366235,
-                "y": 512.2582814864639
+                "x": 487.6363636363636,
+                "y": 319.6363636363636
             }
         },
         "test.tmx#Doors_windows_animation": {
