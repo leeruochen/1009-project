@@ -18,6 +18,7 @@ import github.com_1009project.abstractEngine.testEntity;
 import github.com_1009project.abstractEngine.EventManager;
 import github.com_1009project.abstractEngine.MovementManager;
 import github.com_1009project.abstractEngine.SceneManager;
+import github.com_1009project.abstractEngine.TestScene;
 import github.com_1009project.abstractEngine.UIFactory;
 import github.com_1009project.abstractEngine.Event;
 import com.badlogic.gdx.Input;
@@ -54,6 +55,12 @@ public class GameMaster extends ApplicationAdapter{
         movementManager = new MovementManager();
         sm = new SceneManager(assetManager, entityManager, eventManager);
         
+        sm = new SceneManager(assetManager, entityManager, eventManager);
+
+        // Load two test scenes
+        sm.loadScene(1);
+        
+        sm.switchScene(1);
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -117,18 +124,25 @@ public class GameMaster extends ApplicationAdapter{
 
         // input manager would go here
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            sm.switchScene(1);
+        } // this is to test scene switching, can be removed later
+
         // update all entities
         entityManager.update(deltaTime);
 
         // update collisions
         collisionManager.updateCollision(entityManager.getEntities());
 
+        sm.updateScene(Gdx.graphics.getDeltaTime());
+        sm.renderScene();
+
         // update camera position
         camera.cameraUpdate(deltaTime);
 
         // render entities and map based on camera position
         mapManager.render(camera.getCamera());
-
+        
         if (player.hasCollided) {
             camera.shake(2f, 0.2f);
             player.hasCollided = false;
