@@ -1,8 +1,8 @@
 {
     "activeFile": "tests.tmx",
     "expandedProjectPaths": [
-        "Tiled_files",
-        "."
+        ".",
+        "Tiled_files"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -34,8 +34,8 @@
             "scale": 3,
             "selectedLayer": 15,
             "viewCenter": {
-                "x": 517.3333333333333,
-                "y": 547.8333333333333
+                "x": 464,
+                "y": 312.66666666666663
             }
         },
         "test.tmx#Doors_windows_animation": {
@@ -86,11 +86,14 @@
             "scaleInEditor": 1
         },
         "tests.tmx": {
-            "scale": 2,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                25
+            ],
+            "scale": 11,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 335.5,
-                "y": 263.5
+                "x": 295.2727272727273,
+                "y": 253.09090909090912
             }
         },
         "tests.tmx#Doors_windows_animation": {

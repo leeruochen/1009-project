@@ -7630,7 +7630,7 @@
    <properties>
     <property name="spawnX" type="int" value="0"/>
     <property name="spawnY" type="int" value="0"/>
-    <property name="targetMap" value="house_interior.tmx"/>
+    <property name="targetMap" value="maps/tests.tmx"/>
    </properties>
   </object>
   <object id="92" name="Player" type="Player" x="160" y="898" width="11.6666" height="12.6667"/>

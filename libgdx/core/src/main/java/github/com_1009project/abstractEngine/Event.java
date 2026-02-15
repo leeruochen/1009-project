@@ -5,6 +5,7 @@ public enum Event {
     PlayerRight,
     PlayerLeft,
     PlayerUp,
-    PlayerDown
+    PlayerDown,
+    PlayerInteract
     // These are placeholders
 }

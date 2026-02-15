@@ -61,7 +61,13 @@ public class MapManager extends Layer implements Disposable {
         Iterable<MapLayer> mapLayers = map.getLayers();
         for (MapLayer layer : mapLayers) {
             for (MapObject object : layer.getObjects()) {
-                entityManager.createEntity(object, map_scale);
+                Entity entity = entityManager.createEntity(object, map_scale);
+
+                if (entity instanceof Door) {
+                    if (object.getProperties().containsKey("targetMap")) {
+                        ((Door) entity).setDestination(object.getProperties().get("targetMap", String.class));
+                    }
+                }
             }
         }
     }

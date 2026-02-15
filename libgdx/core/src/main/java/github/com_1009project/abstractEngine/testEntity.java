@@ -10,6 +10,7 @@ import com.badlogic.gdx.Input;
 public class testEntity extends Entity {
     public boolean hasCollided = false; // Flag for camera shake
     private Texture texture;
+    public String mapToLoad = null;
 
     public testEntity(float x, float y, float w, float h, Texture texture) {
         super();
@@ -50,13 +51,17 @@ public class testEntity extends Entity {
             if (other instanceof Door) {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
                     System.out.println("Interacted with door!");
+                    String dest = ((Door) other).getDestination();
+                    if (dest != null && !dest.isEmpty()) {
+                        this.mapToLoad = dest; // Set the map to load
+                    }
                 }
             }
             else if (other instanceof CollisionBox) {
                 this.setPosition(this.getPreviousPosition().x, this.getPreviousPosition().y);
-                this.getCollisionComponent().updateBounds(this.getPosition());
                 this.hasCollided = true;
             }
         }
+        this.getCollisionComponent().updateBounds(getPosition());
     }
 }

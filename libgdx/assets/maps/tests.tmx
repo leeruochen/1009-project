@@ -595,7 +595,10 @@
  </objectgroup>
  <objectgroup id="25" name="Entities">
   <object id="15" name="Player" type="Player" x="287.75" y="234" width="16.75" height="16.75"/>
-  <object id="16" name="Door" type="Door" x="284.75" y="247.25" width="21" height="11.75"/>
-  <object id="17" x="53" y="87.25" width="0.25" height="0.5"/>
+  <object id="16" name="Door" type="Door" x="284.75" y="247.25" width="21" height="11.75">
+   <properties>
+    <property name="targetMap" value="maps/test.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

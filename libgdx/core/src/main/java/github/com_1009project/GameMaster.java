@@ -55,12 +55,12 @@ public class GameMaster extends ApplicationAdapter{
         movementManager = new MovementManager();
         sm = new SceneManager(assetManager, entityManager, eventManager);
         
-        sm = new SceneManager(assetManager, entityManager, eventManager);
+        // sm = new SceneManager(assetManager, entityManager, eventManager);
 
-        // Load two test scenes
-        sm.loadScene(1);
+        // // Load two test scenes
+        // sm.loadScene(1);
         
-        sm.switchScene(1);
+        // sm.switchScene(1);
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -108,6 +108,7 @@ public class GameMaster extends ApplicationAdapter{
 		eventManager.mapKey(Input.Keys.RIGHT, Event.PlayerRight);
 		eventManager.mapKey(Input.Keys.LEFT, Event.PlayerLeft);
 		eventManager.mapKey(Input.Keys.SPACE, Event.PlayerJump);
+        eventManager.mapKey(Input.Keys.E, Event.PlayerInteract);
 
 		// Register input processor
 		Gdx.input.setInputProcessor(eventManager);
@@ -121,6 +122,13 @@ public class GameMaster extends ApplicationAdapter{
 
         // time between each frame, this ensures same speed on different devices
         float deltaTime = Gdx.graphics.getDeltaTime();
+
+        if (player != null && player.mapToLoad != null) {
+            String newMap = player.mapToLoad;
+            player.mapToLoad = null; // reset the mapToLoad variable
+            loadMap(newMap);
+            return;
+        }
 
         // input manager would go here
 
@@ -153,6 +161,25 @@ public class GameMaster extends ApplicationAdapter{
         batch.begin();
         entityManager.render(batch);
         batch.end();
+    }
+
+    private void loadMap(String mapName) {
+        entityManager.clear(); // Clear existing entities
+
+        if (!assetManager.isLoaded(mapName)) {
+            assetManager.load(mapName, TiledMap.class);
+            assetManager.finishLoading();
+        }
+        mapManager.setMap(assetManager.get(mapName, TiledMap.class));
+        mapManager.loadEntities(); // Load entities from the new map
+
+        for (Entity entity : entityManager.getEntities()) {
+            if (entity instanceof testEntity) {
+                player = (testEntity) entity;
+                break;
+            }
+        }
+        camera.setTarget(player);
     }
 
     private void loadAssets() {
