@@ -1,9 +1,11 @@
 package github.com_1009project.abstractEngine;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.Input;
 
 public class testEntity extends Entity {
     public boolean hasCollided = false; // Flag for camera shake
@@ -45,10 +47,17 @@ public class testEntity extends Entity {
         Rectangle otherRect = other.getCollisionComponent().getBounds();
 
         if (playerRect.overlaps(otherRect)) {
-            this.setPosition(this.getPreviousPosition().x, this.getPreviousPosition().y);
+            if (other instanceof Door) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                    System.out.println("Interacted with door!");
+                }
+            }
+            else if (other instanceof CollisionBox) {
+                this.setPosition(this.getPreviousPosition().x, this.getPreviousPosition().y);
+                this.hasCollided = true;
+            }
         }
-        this.getCollisionComponent().updateBounds(this.getPosition());
 
-        this.hasCollided = true;
+        this.getCollisionComponent().updateBounds(this.getPosition());
     }
 }

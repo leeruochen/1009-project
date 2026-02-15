@@ -74,7 +74,7 @@ public class EntityFactory {
 
             case "CollisionBox":
                 return new CollisionBox(x, y, width, height);
-
+            // Add cases for other entity types as needed
             default:
                 System.out.println("Unknown entity type: " + type);
                 return null;
