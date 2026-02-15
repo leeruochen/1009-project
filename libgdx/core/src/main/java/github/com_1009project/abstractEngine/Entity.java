@@ -12,10 +12,6 @@ public abstract class Entity implements Moveable{
     private Vector2 size;
     private float rotation; 
     private Vector2 previousPosition;
-    private Vector2 velocity;
-    private Vector2 acceleration;
-    private float maxSpeed;
-    private float friction;
     private CollisionComponent collisionComponent;
     private boolean isPersistent;
     private boolean inputEnabled;
@@ -28,10 +24,6 @@ public abstract class Entity implements Moveable{
         this.size = new Vector2(1, 1); 
         this.rotation = 0;
         this.previousPosition = new Vector2(0, 0);
-        this.velocity = new Vector2(0, 0);
-        this.acceleration = new Vector2(0, 0);
-        this.maxSpeed = 0;
-        this.friction = 0; 
         this.active = true; 
         this.inputEnabled = true;
         this.onGround = true;
