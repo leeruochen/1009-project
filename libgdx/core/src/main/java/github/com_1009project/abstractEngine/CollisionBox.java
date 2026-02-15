@@ -22,9 +22,4 @@ public class CollisionBox extends Entity {
     // no onCollision behavior, classes will implement their own collision logic if touching this box
     @Override
     public void onCollision(Entity other) {}
-
-    // copy method to create new instance to transfer from map to entity manager
-    public Entity copy() {
-        return new CollisionBox(this.getPosition().x, this.getPosition().y, this.getSize().x, this.getSize().y);
-    }
 }

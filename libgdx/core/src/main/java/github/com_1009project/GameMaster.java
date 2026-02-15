@@ -76,11 +76,10 @@ public class GameMaster extends ApplicationAdapter{
         // scale the map if needed, if textures look small
         // load the map from file
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
-        mapManager = new MapManager(entityFactory);
+        mapManager = new MapManager(entityManager);
         mapManager.setScale(4.0f); 
         mapManager.setMap(assetManager.get("maps/test.tmx", TiledMap.class));
-        List<Entity> collisionLayer = mapManager.loadCollisionLayer("Collision");
-        entityManager.addEntities(collisionLayer);
+        mapManager.loadCollisionLayer("Collision");
 
         // example of creating an entity and making it the target of the camera
         player = (testEntity) entityManager.createEntity(EntityType.PLAYER);
