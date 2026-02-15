@@ -25,7 +25,7 @@ public class Scene {
     }
     public void init() {
         // add BackgroundLayer and EntityLayer
-        layers.add(new BackgroundLayer(resourceManager));
+        layers.add(new BackgroundLayer("imgs/background.png"));
         layers.add(new EntityLayer(eventManager, entityManager));
         layers.add(new UILayer());
     }

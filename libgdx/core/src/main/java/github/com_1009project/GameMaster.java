@@ -54,6 +54,12 @@ public class GameMaster extends ApplicationAdapter{
         movementManager = new MovementManager();
         sm = new SceneManager(assetManager, entityManager, eventManager);
         
+        sm = new SceneManager(assetManager, entityManager, eventManager);
+
+        // Load two test scenes
+        sm.loadScene(1);
+        
+        sm.switchScene(1);
 
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
@@ -124,12 +130,15 @@ public class GameMaster extends ApplicationAdapter{
         // update collisions
         collisionManager.updateCollision(entityManager.getEntities());
 
+        sm.updateScene(Gdx.graphics.getDeltaTime());
+        sm.renderScene();
+
         // update camera position
         camera.cameraUpdate(deltaTime);
 
         // render entities and map based on camera position
         mapManager.render(camera.getCamera());
-
+        
         if (player.hasCollided) {
             camera.shake(2f, 0.2f);
             player.hasCollided = false;
