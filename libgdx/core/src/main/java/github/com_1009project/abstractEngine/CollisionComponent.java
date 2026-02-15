@@ -7,14 +7,23 @@ public class CollisionComponent {
     private Rectangle bounds;
     private boolean active = true;
 
+    private float offsetX;
+    private float offsetY;
+
     // creates a collision bounds that will follow the entity
     public CollisionComponent(float x, float y, float width, float height) {
-        this.bounds = new Rectangle(x, y, width, height);
+        this(x, y, width, height, 0, 0);
+    }
+
+    public CollisionComponent(float x, float y, float width, float height, float offsetX, float offsetY) {
+        this.bounds = new Rectangle(x + offsetX, y + offsetY, width, height);
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     protected void updateBounds(Vector2 position) { 
         // update the bounding rectangle based on the entity's position and size
-        this.bounds.setPosition(position.x, position.y);
+        this.bounds.setPosition(position.x + this.offsetX, position.y + this.offsetY);
     }
 
     public Rectangle getBounds() { 

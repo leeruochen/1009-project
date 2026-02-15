@@ -9,7 +9,7 @@ public class EntityLayer extends Layer {
 
     public EntityLayer(EventManager eventManager, EntityManager entityManager) {
         this.entityManager = entityManager;
-        entityManager.setEventManager(eventManager);
+        // entityManager.setEventManager(eventManager);
     }
 
     @Override
