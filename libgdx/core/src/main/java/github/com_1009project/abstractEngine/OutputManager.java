@@ -36,8 +36,15 @@ public class OutputManager implements EventObserver{
     }
     
     public void dispose(){
-        // all other disposal is offloaded to ResourceManager
         if (curMusic != null){curMusic.dispose();}
+        for (String filename : soundMap.values()) {
+            resourceManager.unload(filename);
+        }
+        for (String filename : musicMap.values()) {
+            resourceManager.unload(filename);
+        }
+        soundMap.clear();
+        musicMap.clear();
     }
 
     public OutputManager(AssetManager resourceManager){
@@ -53,4 +60,5 @@ public class OutputManager implements EventObserver{
 
     @Override
     public void onNotify(Event event, Boolean up, int screenX, int screenY){onNotify(event, up);}
+    
 }

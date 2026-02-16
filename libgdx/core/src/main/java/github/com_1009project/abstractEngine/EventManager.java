@@ -48,4 +48,9 @@ public class EventManager extends InputAdapter{
     public void addObserver(EventObserver observer){
         observers.add(observer);
     }
+
+    public void dispose(){
+        observers.clear();
+        keyMappings.clear();
+    }
 }
