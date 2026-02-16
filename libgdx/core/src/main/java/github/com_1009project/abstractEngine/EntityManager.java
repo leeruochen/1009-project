@@ -1,4 +1,4 @@
-package github.com_1009project.abstractEngine;
+package io.github.some_example_name.lwjgl3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,34 +6,33 @@ import java.util.Collections;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObject;
 
-public class EntityManager implements EventObserver {
+public class EntityManager {
 
     private final List<Entity> entities = new ArrayList<>();
     private final List<Entity> toRemove = new ArrayList<>();
 
     private final EntityFactory factory;
-    private MovementManager movementManager;
+    private AssetManager assetManager;
 
-    public EntityManager(AssetManager assetManager) {
-        this.factory = new EntityFactory(assetManager);
+    public EntityManager(EntityFactory factory, AssetManager assetManager) {
+        this.factory = factory;
+        this.assetManager = assetManager;
     }
 
     // Creates a new entity of the specified type, adds it to the manager, and returns it
     public Entity createEntity(EntityType type) {
-        Entity entity = factory.createEntity(type);
+        Entity entity = factory.createEntity(type, assetManager);
 
         entities.add(entity);
         return entity;
     }
 
-    public Entity createEntity(MapObject object, float map_scale) {
-        Entity entity = factory.createEntity(object, map_scale);
+    // Used for entity creation for map layers
+    public Entity createLayerEntity(EntityType type, float x, float y, float width, float height) {
+        Entity entity = factory.createEntity(type, x , y, width, height);
 
-        if (entity != null) {
-            entities.add(entity);
-        }
+        entities.add(entity);
         return entity;
     }
 
@@ -86,29 +85,9 @@ public class EntityManager implements EventObserver {
 		}
 	}
 
-	//reference to movementManager in GameMaster
-	public void setMovementManager(MovementManager movementManager) {
-		this.movementManager = movementManager;
-	}
-
     public void dispose(){
         //dispose behaviour
         return;
     }
-	@Override
-	public void onNotify(Event event, Boolean up) {
-		// Only loop through entities that have explicitly flagged they want input
-		for (Entity entity : entities) {
-			if (entity.isActive()) {
-				if (entity.isInputEnabled()) {
-					movementManager.handlePlayerInput(entity, event, up);
-				}
-			}
-		}
-	}
 
-	@Override // this is for handling mouse events
-	public void onNotify(Event event, Boolean up, int screenX, int screenY) {
-
-	}
 }
