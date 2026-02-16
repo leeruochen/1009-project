@@ -7,10 +7,16 @@ import com.badlogic.gdx.utils.Array;
 
 public class EventManager extends InputAdapter{
     private HashMap<Integer, Event> keyMappings;
+    private HashMap<Integer, Event> mouseMappings;
     private Array<EventObserver> observers;
     private void notifyObservers(Event event, Boolean up){
         for (int i = 0; i < observers.size; i++){
             observers.get(i).onNotify(event, up);
+        }
+    }
+    private void notifyObservers(Event event, Boolean up, int screenX, int screenY){
+        for (int i = 0; i < observers.size; i++){
+            observers.get(i).onNotify(event, up, screenX, screenY);
         }
     }
 
@@ -32,6 +38,24 @@ public class EventManager extends InputAdapter{
     public boolean keyDown(int keycode) {
         if (keyMappings.containsKey(keycode)){
             notifyObservers(keyMappings.get(keycode), false);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button){
+        if (keyMappings.containsKey(button)){
+            notifyObservers(keyMappings.get(button), false, screenX, screenY);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button){
+        if (keyMappings.containsKey(button)){
+            notifyObservers(keyMappings.get(button), true, screenX, screenY);
             return true;
         }
         return false;
