@@ -16,6 +16,14 @@ public class MovementComponent {
         this.maxSpeed = 0;
         this.friction = 0;
     }
+
+    //entity should not be moving when created, when input events are triggered then movementmanager handles it
+    public MovementComponent(float maxSpeed, float friction) { 
+    	this.velocity = new Vector2(0, 0); 
+        this.acceleration = new Vector2(0, 0);
+        this.maxSpeed = maxSpeed;
+        this.friction = friction;
+    }
     
     // Velocity
     public Vector2 getVelocity() {
