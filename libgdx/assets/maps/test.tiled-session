@@ -34,8 +34,8 @@
             "scale": 11,
             "selectedLayer": 15,
             "viewCenter": {
-                "x": 463.54545454545456,
-                "y": 322.3636363636364
+                "x": 513.4545454545455,
+                "y": 521.7727272727273
             }
         },
         "test.tmx#Doors_windows_animation": {
@@ -92,8 +92,8 @@
             "scale": 11,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 295.2727272727273,
-                "y": 253.09090909090912
+                "x": 276.27272727272725,
+                "y": 272.04545454545456
             }
         },
         "tests.tmx#Doors_windows_animation": {

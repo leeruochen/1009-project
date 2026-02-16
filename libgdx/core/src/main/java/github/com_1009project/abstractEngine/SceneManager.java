@@ -6,13 +6,14 @@ import java.util.Map;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SceneManager {
+public class SceneManager implements EventObserver {
     private Map<Integer, Scene> scenes = new HashMap<>();
     private Scene currentScene;
     private AssetManager resourceManager; // reference to resource manager to pass to scenes
     private EntityManager entityManager;
     private EventManager eventManager;
     private SpriteBatch batch;
+    private boolean interactPressed = false;
 
     public SceneManager(AssetManager resourceManager, EntityManager entityManager, EventManager eventManager, SpriteBatch batch) {
         this.resourceManager = resourceManager;
@@ -41,22 +42,6 @@ public class SceneManager {
         }
 
         scenes.put(id, scene);
-    }
-
-    // Switch to a scene by ID
-    public void switchScene(int id) {
-        Scene nextScene = scenes.get(id);
-        if (nextScene == null) {
-            throw new IllegalArgumentException("Scene with ID " + id + " not loaded.");
-        }
-
-        if (currentScene != null) {
-            currentScene.onExit();
-        }
-
-        currentScene = nextScene;
-        currentScene.init();
-        currentScene.onEnter();
     }
 
     // Update the current scene
@@ -92,5 +77,42 @@ public class SceneManager {
     // Optional: get the current scene
     public Scene getCurrentScene() {
         return currentScene;
+    }
+
+    @Override
+    public void onNotify(Event event, Boolean up) {
+		// Only loop through entities that have explicitly flagged they want input
+		for (Entity entity : entityManager.getEntities()) {
+			if (entity.isActive()) {
+				if (entity.isInputEnabled()) {
+					this.changeScene(entity, event, up);
+				}
+			}
+		}
+	}
+
+	@Override // this is for handling mouse events
+	public void onNotify(Event event, Boolean up, int screenX, int screenY) {
+
+	}
+    
+    public void changeScene(Entity entity, Event event, boolean isUp) {
+        if (entity == null) return;
+
+        // Update input state
+        if (!isUp) { // Key Pressed
+            switch (event) {
+                case PlayerInteract:
+                    // Handle interaction logic here if needed // testinggggggggggggggggggg
+                    interactPressed = true;
+                    break;
+            }
+        } else { // Key Released
+            switch (event) {
+                case PlayerInteract:
+                    interactPressed = false;
+                    break;
+            }
+        }
     }
 }

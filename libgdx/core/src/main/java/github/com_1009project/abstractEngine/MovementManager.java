@@ -11,7 +11,6 @@ public class MovementManager {
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean spacePressed = false;
-    private boolean interactPressed = false;
 
     public void handlePlayerInput(Entity entity, Event event, boolean isUp) {
         if (entity == null) return;
@@ -33,10 +32,6 @@ public class MovementManager {
                 case PlayerJump: 
                 	spacePressed = true;
                 	break;
-                case PlayerInteract:
-                    // Handle interaction logic here if needed // testinggggggggggggggggggg
-                    interactPressed = true;
-                    break;
             }
         } else { // Key Released
             switch (event) {
@@ -55,9 +50,6 @@ public class MovementManager {
                 case PlayerJump: 
                 	spacePressed = false;
                 	break;
-                case PlayerInteract:
-                    interactPressed = false;
-                    break;
             }
         }
 
@@ -66,7 +58,7 @@ public class MovementManager {
     }
 
     private void updatePlayerVelocity(Entity entity) {
-        Vector2 vel = entity.getVelocity();
+        Vector2 vel = entity.getMovementComponent().getVelocity();
         
         // Horizontal movement
         if (leftPressed && !rightPressed) {
