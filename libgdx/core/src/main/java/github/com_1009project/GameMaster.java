@@ -17,6 +17,7 @@ import github.com_1009project.abstractEngine.Entity;
 import github.com_1009project.abstractEngine.testEntity;
 import github.com_1009project.abstractEngine.EventManager;
 import github.com_1009project.abstractEngine.MovementManager;
+import github.com_1009project.abstractEngine.PauseScene;
 import github.com_1009project.abstractEngine.SceneManager;
 import github.com_1009project.abstractEngine.UIFactory;
 import github.com_1009project.abstractEngine.Event;
@@ -73,6 +74,8 @@ public class GameMaster extends ApplicationAdapter{
         mapManager.setScale(4.0f); 
         mapManager.setMap(assetManager.get("maps/tests.tmx", TiledMap.class));
         mapManager.loadEntities();
+        
+        sm = new SceneManager(assetManager, entityManager, eventManager, batch);
 
         // example of creating an entity and making it the target of the camera
         // this makes the camera follow the player entity
@@ -83,9 +86,11 @@ public class GameMaster extends ApplicationAdapter{
             }
         }
         camera.setTarget(player);
+        sm.loadScene(1);
 
         //eventmanager adds movementManager as an event observer
 		eventManager.addObserver(movementManager);
+        eventManager.addObserver(sm); // add SceneManager as an observer to handle pause events
 
 		//key mappings for eventManager
 		eventManager.mapKey(Input.Keys.W, Event.PlayerUp);
@@ -96,6 +101,7 @@ public class GameMaster extends ApplicationAdapter{
 		eventManager.mapKey(Input.Keys.LEFT, Event.PlayerLeft);
 		eventManager.mapKey(Input.Keys.SPACE, Event.PlayerJump);
         eventManager.mapKey(Input.Keys.E, Event.PlayerInteract);
+        eventManager.mapKey(Input.Keys.ESCAPE, Event.GamePause);
 
 		// Register input processor
 		Gdx.input.setInputProcessor(eventManager);
@@ -109,6 +115,14 @@ public class GameMaster extends ApplicationAdapter{
 
         // time between each frame, this ensures same speed on different devices
         float deltaTime = Gdx.graphics.getDeltaTime();
+
+        // Check if paused
+        if (sm.getCurrentScene() instanceof PauseScene) {
+            // Only update and render the Pause UI
+            sm.updateScene(deltaTime);
+            sm.renderScene();
+            return; // Skip the rest of the game logic below
+        }
 
         if (player != null && player.mapToLoad != null) {
             String newMap = player.mapToLoad;

@@ -14,6 +14,7 @@ public class SceneManager implements EventObserver {
     private EventManager eventManager;
     private SpriteBatch batch;
     private boolean interactPressed = false;
+    private int previousSceneId = 1; // Default to main game
 
     public SceneManager(AssetManager resourceManager, EntityManager entityManager, EventManager eventManager, SpriteBatch batch) {
         this.resourceManager = resourceManager;
@@ -29,19 +30,18 @@ public class SceneManager implements EventObserver {
     // Load a scene by ID (can be extended to load specific subclasses like TestScene)
     public void loadScene(int id) {
         if (scenes.containsKey(id)) {
-            throw new IllegalStateException("Scene with ID " + id + " already loaded.");
-        }
-
-        Scene scene;
-        if (id == 1) {
-            // Example: load TestScene when ID = 1
-            scene = new TestScene(id, resourceManager, entityManager, eventManager, batch);
+            currentScene = scenes.get(id);
         } else {
-            // fallback generic scene
-            scene = new TestScene(id, resourceManager, entityManager, eventManager, batch);
+            if (id == 99) {
+                currentScene = new PauseScene(id, resourceManager, entityManager, eventManager, batch, this);
+            } else if (id == 1) {
+                currentScene = new TestScene(id, resourceManager, entityManager, eventManager, batch);
+            } else {
+                throw new IllegalArgumentException("Unknown scene ID: " + id);
+            }
+            scenes.put(id, currentScene);
         }
-
-        scenes.put(id, scene);
+        currentScene.onEnter();
     }
 
     // Update the current scene
@@ -81,6 +81,16 @@ public class SceneManager implements EventObserver {
 
     @Override
     public void onNotify(Event event, Boolean up) {
+        if (currentScene == null) return;
+
+        if (event == Event.GamePause && !up) { // Only trigger on key press, not release
+            if (currentScene instanceof PauseScene) { // If we're already in the pause scene, return to the previous scene
+                loadScene(previousSceneId); 
+            } else {
+                previousSceneId = currentScene.getId();  // Save the current scene ID before switching to pause
+                loadScene(99); // Load the pause scene (ID 99)
+            }
+        }
 		// Only loop through entities that have explicitly flagged they want input
 		for (Entity entity : entityManager.getEntities()) {
 			if (entity.isActive()) {

@@ -10,26 +10,26 @@ public class UILayer extends Layer {
 
     public UILayer(SpriteBatch batch) {
         this.batch = batch;
-        //this.stage = new Stage(new ScreenViewport(), batch);
+        this.stage = new Stage(new ScreenViewport(), batch);
     }
 
     @Override
     public void update(float deltaTime) {
-        //stage.act(deltaTime);
+        stage.act(deltaTime);
     }
 
     @Override
     public void render() {
-       //stage.draw();
+       stage.draw();
     }
 
     @Override
     public void dispose() {
-        //stage.dispose();
+        stage.dispose();
     }
 
     public void addActor(Actor actor){
-        //stage.addActor(actor);
+        stage.addActor(actor);
     }
     // optional can remove if not needed
     public Stage getStage() {
