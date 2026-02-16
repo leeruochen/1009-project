@@ -18,19 +18,20 @@ public class testEntity extends Entity {
         this.setSize(w, h);
         this.createCollisionComponent(44, 10, 10, 0);
         this.texture = texture;
-        this.setMaxSpeed(1000f);
-        this.setAcceleration(new Vector2(0,0));
-        this.setFriction(0.85f);
+        this.getMovementComponent().setMaxSpeed(1000f);
+        this.getMovementComponent().setAcceleration(new Vector2(0,0));
+        this.getMovementComponent().setFriction(0.85f);
         this.setOnGround(true);
     }
 
     @Override
     public void updateMovement(float deltaTime) {
-        Vector2 vel = this.getVelocity();
+        Vector2 vel = this.getMovementComponent().getVelocity();
+        float playerMaxSpd = this.getMovementComponent().getMaxSpeed();
         
-        // for diagonal movement
-        if (vel.len() > this.getMaxSpeed()) {
-            vel.setLength(this.getMaxSpeed());
+        //diagonal movement
+        if (vel.len() > playerMaxSpd) {
+            vel.setLength(playerMaxSpd);
         }
         
         // Update position
