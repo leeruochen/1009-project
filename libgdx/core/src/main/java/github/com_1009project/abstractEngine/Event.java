@@ -7,5 +7,4 @@ public enum Event {
     PlayerUp,
     PlayerDown,
     PlayerInteract,
-    // These are placeholders
 }

@@ -1,4 +1,4 @@
-package io.github.some_example_name.lwjgl3;
+package github.com_1009project.abstractEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,33 +6,33 @@ import java.util.Collections;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
 
-public class EntityManager {
+public class EntityManager{
 
     private final List<Entity> entities = new ArrayList<>();
     private final List<Entity> toRemove = new ArrayList<>();
 
     private final EntityFactory factory;
-    private AssetManager assetManager;
 
-    public EntityManager(EntityFactory factory, AssetManager assetManager) {
-        this.factory = factory;
-        this.assetManager = assetManager;
+    public EntityManager(AssetManager assetManager) {
+        this.factory = new EntityFactory(assetManager);
     }
 
     // Creates a new entity of the specified type, adds it to the manager, and returns it
     public Entity createEntity(EntityType type) {
-        Entity entity = factory.createEntity(type, assetManager);
+        Entity entity = factory.createEntity(type);
 
         entities.add(entity);
         return entity;
     }
 
-    // Used for entity creation for map layers
-    public Entity createLayerEntity(EntityType type, float x, float y, float width, float height) {
-        Entity entity = factory.createEntity(type, x , y, width, height);
+    public Entity createEntity(MapObject object, float map_scale) {
+        Entity entity = factory.createEntity(object, map_scale);
 
-        entities.add(entity);
+        if (entity != null) {
+            entities.add(entity);
+        }
         return entity;
     }
 
@@ -84,10 +84,8 @@ public class EntityManager {
 			}
 		}
 	}
-
     public void dispose(){
         //dispose behaviour
         return;
     }
-
 }
