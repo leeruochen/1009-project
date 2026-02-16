@@ -18,7 +18,6 @@ import github.com_1009project.abstractEngine.testEntity;
 import github.com_1009project.abstractEngine.EventManager;
 import github.com_1009project.abstractEngine.MovementManager;
 import github.com_1009project.abstractEngine.SceneManager;
-import github.com_1009project.abstractEngine.TestScene;
 import github.com_1009project.abstractEngine.UIFactory;
 import github.com_1009project.abstractEngine.Event;
 import com.badlogic.gdx.Input;
@@ -55,11 +54,6 @@ public class GameMaster extends ApplicationAdapter{
         movementManager = new MovementManager();
         sm = new SceneManager(assetManager, entityManager, eventManager, batch);
 
-        // // Load two test scenes
-        // sm.loadScene(1);
-        
-        // sm.switchScene(1);
-
         // set up camera with max world bounds
         camera = new CameraManager(width, height);
         camera.setBounds(4000, 4000);
@@ -81,9 +75,7 @@ public class GameMaster extends ApplicationAdapter{
         mapManager.loadEntities();
 
         // example of creating an entity and making it the target of the camera
-        // player = (testEntity) entityManager.createEntity(EntityType.PLAYER);
         // this makes the camera follow the player entity
-        
         for (Entity entity : entityManager.getEntities()) {
             if (entity instanceof testEntity) {
                 player = (testEntity) entity;
@@ -128,8 +120,6 @@ public class GameMaster extends ApplicationAdapter{
             return;
         }
 
-        // input manager would go here
-
         // update all entities
         entityManager.update(deltaTime);
 
@@ -154,15 +144,17 @@ public class GameMaster extends ApplicationAdapter{
         batch.end();
     }
 
+    // this method is used to load a new map, it clears the current entities and loads the new map's entities
+    // used when transitioning between maps, the player entity will have a variable that specifies which map to load, and when the variable is not null, this method will be called with the new map name
     private void loadMap(String mapName) {
-        entityManager.clear(); // Clear existing entities
+        entityManager.clear();
 
         if (!assetManager.isLoaded(mapName)) {
             assetManager.load(mapName, TiledMap.class);
             assetManager.finishLoading();
         }
         mapManager.setMap(assetManager.get(mapName, TiledMap.class));
-        mapManager.loadEntities(); // Load entities from the new map
+        mapManager.loadEntities();
 
         for (Entity entity : entityManager.getEntities()) {
             if (entity instanceof testEntity) {
@@ -173,6 +165,8 @@ public class GameMaster extends ApplicationAdapter{
         camera.setTarget(player);
     }
 
+    // an example of how to use the asset manager to load assets, this can be expanded to load more assets as needed
+    // can also use a json file or other data file to specify assets to load, and parse that file in this method to load assets in bulk
     private void loadAssets() {
         // load textures
         assetManager.load("imgs/boy_down_1.png", Texture.class);
@@ -186,6 +180,7 @@ public class GameMaster extends ApplicationAdapter{
         assetManager.load("maps/tests.tmx", TiledMap.class, params);
     }
 
+    // resize is called whenever ApplicationAdapter detects a change in screen size, this can be used to adjust the camera viewport and other properties as needed
     @Override
     public void resize(int width, int height) {
         camera.resize(width, height);
