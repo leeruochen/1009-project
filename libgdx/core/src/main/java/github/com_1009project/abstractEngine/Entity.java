@@ -85,14 +85,7 @@ public abstract class Entity{
     public float getRotation() {return rotation;}
     public int getId() {return id;}
     public Vector2 getPreviousPosition() {return previousPosition;}
-    public Vector2 getVelocity() { return movementComponent.getVelocity(); }
-    public void setVelocity(Vector2 velocity) { movementComponent.setVelocity(velocity); }
-    public Vector2 getAcceleration() { return movementComponent.getAcceleration(); }
-    public void setAcceleration(Vector2 acceleration) { movementComponent.setAcceleration(acceleration); }
-    public float getMaxSpeed() { return movementComponent.getMaxSpeed(); }
-    public void setMaxSpeed(float speed) { movementComponent.setMaxSpeed(speed); }
-    public float getFriction() { return movementComponent.getFriction(); }
-    public void setFriction(float friction) { movementComponent.setFriction(friction); }
+    public MovementComponent getMovementComponent() {return this.movementComponent;}
     public boolean isActive() { return active;}
     public void setActive(boolean active) { this.active = active;}
     public boolean getPersistent() {return isPersistent;}
