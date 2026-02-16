@@ -130,18 +130,11 @@ public class GameMaster extends ApplicationAdapter{
 
         // input manager would go here
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            sm.switchScene(1);
-        } // this is to test scene switching, can be removed later
-
         // update all entities
         entityManager.update(deltaTime);
 
         // update collisions
         collisionManager.updateCollision(entityManager.getEntities());
-
-        sm.updateScene(Gdx.graphics.getDeltaTime());
-        sm.renderScene();
 
         // update camera position
         camera.cameraUpdate(deltaTime);
