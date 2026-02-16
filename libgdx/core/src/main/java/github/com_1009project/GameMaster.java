@@ -51,7 +51,7 @@ public class GameMaster extends ApplicationAdapter{
         assetManager = new AssetManager();
         entityManager = new EntityManager(assetManager);
         eventManager = new EventManager();
-        movementManager = new MovementManager();
+        movementManager = new MovementManager(entityManager);
         sm = new SceneManager(assetManager, entityManager, eventManager, batch);
 
         // set up camera with max world bounds
@@ -84,11 +84,8 @@ public class GameMaster extends ApplicationAdapter{
         }
         camera.setTarget(player);
 
-        //eventmanager adds entityManager as an event observer
-		eventManager.addObserver(entityManager);
-		
-		//entitymanager and movementmanager connected (aggregation relationship)
-		entityManager.setMovementManager(movementManager);
+        //eventmanager adds movementManager as an event observer
+		eventManager.addObserver(movementManager);
 
 		//key mappings for eventManager
 		eventManager.mapKey(Input.Keys.W, Event.PlayerUp);
@@ -196,4 +193,3 @@ public class GameMaster extends ApplicationAdapter{
         sm.dispose();
     }
 }
-
