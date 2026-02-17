@@ -51,7 +51,6 @@ public class testEntity extends Entity {
         if (playerRect.overlaps(otherRect)) {
             if (other instanceof Door) {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                    System.out.println("Interacted with door!");
                     String dest = ((Door) other).getDestination();
                     if (dest != null && !dest.isEmpty()) {
                         this.mapToLoad = dest; // Set the map to load

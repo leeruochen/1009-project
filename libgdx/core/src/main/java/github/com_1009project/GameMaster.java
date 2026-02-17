@@ -72,8 +72,7 @@ public class GameMaster extends ApplicationAdapter{
         // parse collision layer and add collision boxes to entities list, "Collision" can be changed to how the developer wants to name it in Tiled
         mapManager = new MapManager(entityManager);
         mapManager.setScale(4.0f); 
-        mapManager.setMap(assetManager.get("maps/tests.tmx", TiledMap.class));
-        mapManager.loadEntities();
+        loadMap("maps/test.tmx");
         
         sm = new SceneManager(assetManager, entityManager, eventManager, batch);
 
@@ -160,10 +159,6 @@ public class GameMaster extends ApplicationAdapter{
     private void loadMap(String mapName) {
         entityManager.clear();
 
-        if (!assetManager.isLoaded(mapName)) {
-            assetManager.load(mapName, TiledMap.class);
-            assetManager.finishLoading();
-        }
         mapManager.setMap(assetManager.get(mapName, TiledMap.class));
         mapManager.loadEntities();
 
