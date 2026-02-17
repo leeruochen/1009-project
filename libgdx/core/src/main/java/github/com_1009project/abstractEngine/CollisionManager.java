@@ -2,8 +2,9 @@ package github.com_1009project.abstractEngine;
 
 import java.util.List;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 
-public class CollisionManager {
+public class CollisionManager implements Disposable {
     private SpatialHashGrid grid;
 
     public CollisionManager(int cellSize) {
