@@ -15,6 +15,7 @@ public abstract class Entity implements Moveable{
     private CollisionComponent collisionComponent;
     private boolean isPersistent;
     private boolean inputEnabled;
+    private boolean canMove;
     private boolean onGround;
     private MovementComponent movementComponent;
 
@@ -25,17 +26,18 @@ public abstract class Entity implements Moveable{
         this.rotation = 0;
         this.previousPosition = new Vector2(0, 0);
         this.active = true; 
-        this.inputEnabled = true;
-        this.onGround = true;
-        this.collisionComponent = null; 
-        this.movementComponent = new MovementComponent();
+        this.inputEnabled = false;
+        this.onGround = false;
+        this.canMove = false;
+        this.collisionComponent = null;
+        this.movementComponent = null;
     }
 
     // to render the entity
     public abstract void render(SpriteBatch batch);
     // to update the entity's movement
     public void updateMovement(float delta) { //from moveable interface
-    	//let entities override this method, they should their own unique movement
+    	//let entities override this method, they should define their own unique movement
     }
 
     // this will be called every frame to update the entity
@@ -85,7 +87,6 @@ public abstract class Entity implements Moveable{
     public float getRotation() {return rotation;}
     public int getId() {return id;}
     public Vector2 getPreviousPosition() {return previousPosition;}
-    public MovementComponent getMovementComponent() {return this.movementComponent;}
     public boolean isActive() { return active;}
     public void setActive(boolean active) { this.active = active;}
     public boolean getPersistent() {return isPersistent;}
@@ -94,6 +95,17 @@ public abstract class Entity implements Moveable{
     public void setInputEnabled(boolean inputEnabled) {this.inputEnabled = inputEnabled;}
     public boolean isOnGround() {return onGround;}
     public void setOnGround(boolean onGround) {this.onGround = onGround;}
+    public boolean isCanMove() {return canMove;}
+    public void setCanMove(boolean canMove) {this.canMove = canMove;}
+    public MovementComponent getMovementComponent() {return this.movementComponent;}
+    public void setMovementComponent(float maxSpeed, float friction) {
+    	if (this.canMove == true) { 
+    		this.movementComponent = new MovementComponent(maxSpeed, friction);
+    	}
+    	else {
+    		this.movementComponent = new MovementComponent();
+    	}
+    }
 
     public void onDestroy(){} // method to be called when the entity is destroyed, can be overridden by subclasses for cleanup
     

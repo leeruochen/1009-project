@@ -17,9 +17,10 @@ public class MovementManager implements EventObserver {
     	this.entityManager = entityManager;
     }
 
-    public void handlePlayerInput(Entity entity, Event event, boolean isUp) {
-        if (entity == null) return;
-
+    private void handlePlayerInput(Entity entity, Event event, boolean isUp) {
+        if (entity == null) {
+        	return;
+        }
         // Update input state
         if (!isUp) { // Key Pressed
             switch (event) {
@@ -64,6 +65,10 @@ public class MovementManager implements EventObserver {
     }
 
     private void updatePlayerVelocity(Entity entity) {
+    	//the input events is faster than testEntity to run its constructor finish, preventing crash
+    	if (entity.getMovementComponent() == null) {
+    		return;
+    	}
         Vector2 vel = entity.getMovementComponent().getVelocity();
         
         // Horizontal movement
@@ -99,7 +104,7 @@ public class MovementManager implements EventObserver {
 		// Only loop through entities that have explicitly flagged they want input
 		for (Entity entity : entityManager.getEntities()) {
 			if (entity.isActive()) {
-				if (entity.isInputEnabled()) {
+				if (entity.isInputEnabled() == true && entity.isCanMove() == true) {
 					handlePlayerInput(entity, event, up);
 				}
 			}
