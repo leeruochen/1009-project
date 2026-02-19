@@ -47,6 +47,7 @@ public class EntityManager{
     public void processRemovals() {
         for (Entity entity : toRemove) {
             entity.onDestroy(); // Call onDestroy for cleanup
+            System.out.println("Removing entity: " + entity);
             entities.remove(entity);
         }
         toRemove.clear();
