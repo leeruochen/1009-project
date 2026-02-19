@@ -5,6 +5,8 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.Gdx;
 //https://libgdx.com/wiki/graphics/2d/tile-maps
@@ -57,15 +59,33 @@ public class MapManager extends Layer implements Disposable {
         renderer.render();
     }
 
-    public void loadEntities() {
+    public void loadEntities(Entity existingPlayer) {
         Iterable<MapLayer> mapLayers = map.getLayers();
+        
         for (MapLayer layer : mapLayers) {
             for (MapObject object : layer.getObjects()) {
-                Entity entity = entityManager.createEntity(object, map_scale);
-
-                if (entity instanceof Door) {
-                    if (object.getProperties().containsKey("targetMap")) {
-                        ((Door) entity).setDestination(object.getProperties().get("targetMap", String.class));
+                String type = object.getProperties().get("type", String.class);
+                
+                // If this is a player spawn point and we have an existing player, reposition it
+                if ("Player".equals(type) && existingPlayer != null) {
+                    RectangleMapObject rectObj = (RectangleMapObject) object;
+                    Rectangle rect = rectObj.getRectangle();
+                    existingPlayer.setPosition(rect.x * map_scale, rect.y * map_scale);
+                    existingPlayer.setSize(rect.width * map_scale, rect.height * map_scale);
+   
+                } 
+                else {
+                
+                    Entity entity = entityManager.createEntity(object, map_scale);
+                    
+                    if (entity instanceof Door) {
+                        if (object.getProperties().containsKey("targetMap")) {
+                            ((Door) entity).setDestination(object.getProperties().get("targetMap", String.class));
+                        }
+                    }
+                    
+                    if (entity instanceof testEntity) {
+                        existingPlayer = entity;
                     }
                 }
             }

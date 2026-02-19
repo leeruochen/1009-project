@@ -22,6 +22,7 @@ public class testEntity extends Entity {
         this.setCanMove(true);
         this.setInputEnabled(true);
         this.setMovementComponent(1000f, 0.85f);
+        this.setPersistent(true);
     }
 
     @Override
