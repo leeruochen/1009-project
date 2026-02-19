@@ -69,7 +69,7 @@ public class EntityManager{
         return Collections.unmodifiableList(entities);
     }
 
-    public void clear() {
+    public void dispose() {
         for (Entity entity : entities) {
             if (!entity.getPersistent()) {
                 markForRemoval(entity);
@@ -84,8 +84,4 @@ public class EntityManager{
 			}
 		}
 	}
-    public void dispose(){
-        //dispose behaviour
-        return;
-    }
 }

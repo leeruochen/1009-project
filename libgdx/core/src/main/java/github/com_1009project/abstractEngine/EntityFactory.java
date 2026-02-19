@@ -27,6 +27,11 @@ public class EntityFactory {
     public Entity createEntity(MapObject object, float mapScale) {
         String type = object.getProperties().get("type", String.class);
 
+        if (type!= null) {
+            System.out.println("Creating entity of type: " + type);
+        } 
+
+        // Create collision box for the map object
         RectangleMapObject rectObj = (RectangleMapObject) object;
         Rectangle rect = rectObj.getRectangle();
 
@@ -35,6 +40,7 @@ public class EntityFactory {
         float width = rect.width * mapScale;
         float height = rect.height * mapScale;
 
+        // Demo code as most of the map objects do not have classes
         if (type == null){
             type = "CollisionBox"; // default to CollisionBox if no type is specified
         }
