@@ -3,7 +3,7 @@ package github.com_1009project.abstractEngine;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Entity implements Moveable{
+public abstract class Entity implements Moveable {
     // properties fields to be used by subclasses
     private static int idCounter = 0;
     private int id; 
@@ -101,9 +101,6 @@ public abstract class Entity implements Moveable{
     public void setMovementComponent(float maxSpeed, float friction) {
     	if (this.canMove == true) { 
     		this.movementComponent = new MovementComponent(maxSpeed, friction);
-    	}
-    	else {
-    		this.movementComponent = new MovementComponent();
     	}
     }
 

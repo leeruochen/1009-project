@@ -91,14 +91,6 @@ public class MovementManager implements EventObserver {
         
     }
     
-    // Call this when player dies, pauses, or something that doesnt involve user input
-    public void resetInput() {
-        leftPressed = false;
-        rightPressed = false;
-        upPressed = false;
-        downPressed = false;
-    }
-    
 	@Override
 	public void onNotify(Event event, Boolean up) {
 		// Only loop through entities that have explicitly flagged they want input

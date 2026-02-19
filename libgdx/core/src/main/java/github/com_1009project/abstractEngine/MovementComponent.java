@@ -2,20 +2,13 @@ package github.com_1009project.abstractEngine;
 
 import com.badlogic.gdx.math.Vector2;
 
-// Component that holds all movement-related data for each entity
+// Component that holds all movement-related attributes for each moveable entity
 
 public class MovementComponent {
     private Vector2 velocity;
     private Vector2 acceleration;
     private float maxSpeed;
     private float friction;
-    
-    public MovementComponent() {
-        this.velocity = new Vector2(0, 0);
-        this.acceleration = new Vector2(0, 0);
-        this.maxSpeed = 0;
-        this.friction = 0;
-    }
 
     //entity should not be moving when created, when input events are triggered then movementmanager handles it
     public MovementComponent(float maxSpeed, float friction) { 
