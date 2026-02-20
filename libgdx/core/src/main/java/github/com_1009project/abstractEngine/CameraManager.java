@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 
+//https://libgdx.com/wiki/graphics/2d/orthographic-camera
+
 public class CameraManager {
     private OrthographicCamera camera = null;
     private Entity target;
