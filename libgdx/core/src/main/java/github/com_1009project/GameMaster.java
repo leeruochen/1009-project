@@ -163,6 +163,7 @@ public class GameMaster extends ApplicationAdapter{
         entityManager.dispose();
 
         mapManager.setMap(assetManager.get(mapName, TiledMap.class));
+        System.out.println("Loaded map: " + mapName);
         mapManager.loadEntities(existingPlayer);
 
         camera.setTarget(player);

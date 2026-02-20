@@ -20,7 +20,7 @@ public class TestScene extends Scene {
     @Override
     public void onEnter() {
         super.onEnter();
-        System.out.println("Entered TestScene");
+        // System.out.println("Entered TestScene");
     }
 
     @Override
