@@ -27,8 +27,8 @@ public class EntityManager{
         return entity;
     }
 
-    public Entity createEntity(MapObject object, float map_scale) {
-        Entity entity = factory.createEntity(object, map_scale);
+    public Entity createEntity(MapObject object, float map_scale, Entity existingPlayer) {
+        Entity entity = factory.createEntity(object, map_scale, existingPlayer);
 
         if (entity != null) {
             entities.add(entity);

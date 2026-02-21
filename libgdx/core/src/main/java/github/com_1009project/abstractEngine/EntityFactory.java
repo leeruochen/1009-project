@@ -24,8 +24,9 @@ public class EntityFactory {
         }
     }
 
-    public Entity createEntity(MapObject object, float mapScale) {
+    public Entity createEntity(MapObject object, float mapScale, Entity existingPlayer) {
         String type = object.getProperties().get("type", String.class);
+        Entity entity = null;
 
         if (type!= null) {
             System.out.println("Creating entity of type: " + type);
@@ -48,17 +49,37 @@ public class EntityFactory {
         switch (type) {
 
             case "Player":
-                return new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
+                entity = new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
+                break;
 
             case "Door":
-                return new Door(x, y, width, height);
+                entity = new Door(x, y, width, height);
+                break;
 
             case "CollisionBox":
-                return new CollisionBox(x, y, width, height);
+                entity = new CollisionBox(x, y, width, height);
+                break;
             // Add cases for other entity types as needed
             default:
                 System.out.println("Unknown entity type: " + type);
-                return null;
+                break;
+
         }
+
+        if ("Player".equals(type) && existingPlayer != null) {
+            existingPlayer.setPosition(rect.x * mapScale, rect.y * mapScale);
+            existingPlayer.setSize(rect.width * mapScale, rect.height * mapScale);
+        } 
+        
+        if (entity instanceof Door) {
+            if (object.getProperties().containsKey("targetMap")) {
+                ((Door) entity).setDestination(object.getProperties().get("targetMap", String.class));
+            }
+        }
+        
+        if (entity instanceof testEntity) {
+            existingPlayer = entity;
+        }
+        return entity;
     }
 }
