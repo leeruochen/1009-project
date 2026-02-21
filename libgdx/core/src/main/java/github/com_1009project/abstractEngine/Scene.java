@@ -37,11 +37,8 @@ public class Scene {
     public void onEnter() {
         System.out.println("Scene " + getId() + " has been switched and now is active!");
         
-        // Create the multiplexer
         InputMultiplexer multiplexer = new InputMultiplexer();
 
-        // Look for the UILayer and add its stage first
-        // This ensures that clicking a button "traps" the touch so it doesn't move the player
         for (Layer layer : layers) {
             if (layer instanceof UILayer) {
                 Stage stage = ((UILayer) layer).getStage();
@@ -50,16 +47,14 @@ public class Scene {
                 }  
             }
         }
-        // Add your EventManager so keyboard movement works
         if (eventManager != null) {
             multiplexer.addProcessor(eventManager);
         }
-        // Tell LibGDX to listen to the multiplexer
         Gdx.input.setInputProcessor(multiplexer);
     }
 
     public void onExit() {
-        // used to stop music or other things when scene is no longer active
+        
     }
     public void update(float deltaTime) {
         for (Layer layer : layers) {

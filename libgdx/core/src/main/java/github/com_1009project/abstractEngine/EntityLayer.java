@@ -12,7 +12,6 @@ public class EntityLayer extends Layer {
         this.batch = batch;
         this.eventManager = eventManager;
         this.entityManager = entityManager;
-        // entityManager.setEventManager(eventManager);
     }
 
     @Override

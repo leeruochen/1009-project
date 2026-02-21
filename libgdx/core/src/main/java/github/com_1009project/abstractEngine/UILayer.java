@@ -31,7 +31,6 @@ public class UILayer extends Layer {
     public void addActor(Actor actor){
         stage.addActor(actor);
     }
-    // optional can remove if not needed
     public Stage getStage() {
         return stage;
     }
