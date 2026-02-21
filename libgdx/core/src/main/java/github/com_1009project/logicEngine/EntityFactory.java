@@ -22,7 +22,7 @@ public class EntityFactory {
     public Entity createEntity(EntityType type) {
         switch (type) {
             // Add cases for other entity types as needed
-            case PLAYER:
+            case Player:
                 return new testEntity(200, 200, 50, 50, assetManager.get("imgs/boy_down_1.png", Texture.class));
             default:
                 return null;

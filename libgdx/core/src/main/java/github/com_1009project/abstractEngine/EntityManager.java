@@ -86,7 +86,7 @@ public class EntityManager{
 
     // getter for persistent entities map
     public Map<String, Entity> getPersistentEntities() {
-        return persistentEntities;
+        return Collections.unmodifiableMap(persistentEntities);
     }
 
     // Disposes of all non-persistent entities and clears the manager
