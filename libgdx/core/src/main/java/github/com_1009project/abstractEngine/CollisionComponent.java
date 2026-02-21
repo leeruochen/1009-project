@@ -4,9 +4,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class CollisionComponent {
+    // bounding rectangle for collision detection
     private Rectangle bounds;
     private boolean active = true;
 
+    // offset values to adjust the position of the collision bounds relative to the entity's position
     private float offsetX;
     private float offsetY;
 
@@ -15,6 +17,7 @@ public class CollisionComponent {
         this(x, y, width, height, 0, 0);
     }
 
+    // creates a collision bounds with specified offsets for more precise or smaller collision detection
     public CollisionComponent(float x, float y, float width, float height, float offsetX, float offsetY) {
         this.bounds = new Rectangle(x + offsetX, y + offsetY, width, height);
         this.offsetX = offsetX;

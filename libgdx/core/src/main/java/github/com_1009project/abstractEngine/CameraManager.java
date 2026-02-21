@@ -7,34 +7,42 @@ import com.badlogic.gdx.math.Vector3;
 //https://libgdx.com/wiki/graphics/2d/orthographic-camera
 
 public class CameraManager {
+    // camera instance for managing view and movement
     private OrthographicCamera camera = null;
     private Entity target;
 
+    // interpolation factor for smooth camera movement, can be adjusted for faster or slower following
     private float lerp = 0.1f; // interpolation factor for smooth camera movement
 
+    // shake effect attributes
     private float shakeIntensity = 0f;
     private float shakeDuration = 0f;
 
+    // world bounds attributes
     private float worldWidth;
     private float worldHeight;
     private boolean boundsActive = false;
 
+    // constructor initializes camera with given viewport size
     public CameraManager(int width, int height) {
         camera = new OrthographicCamera();
         // set camera's viewport size
         camera.setToOrtho(false, width, height);
     }
 
+    // allows setting the target entity for the camera to follow
     public void setTarget(Entity target) {
         this.target = target;
     }
 
+    // allows setting world bounds for the camera to prevent it from moving outside the game world
     public void setBounds(float worldWidth, float worldHeight) {
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
         this.boundsActive = true;
     }
 
+    // update camera position based on target and apply shake effect if active
     public void cameraUpdate(float delta) {
         // get coordinates of the target entity
         float targetX = target.getPosition().x + target.getSize().x / 2;
@@ -76,6 +84,7 @@ public class CameraManager {
         camera.update();
     }
 
+    // shake the camera with given intensity and duration
     public void shake(float intensity, float duration) {
         this.shakeIntensity = intensity;
         this.shakeDuration = duration;
@@ -87,6 +96,7 @@ public class CameraManager {
         camera.update();
     }
 
+    // returns the camera instance
     public OrthographicCamera getCamera() {
         return camera;
     }

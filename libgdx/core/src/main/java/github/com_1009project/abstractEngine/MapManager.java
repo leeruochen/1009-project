@@ -18,6 +18,8 @@ public class MapManager implements Disposable {
     private float map_scale;
     private OrthographicCamera staticCam;
 
+    // constructor initializes map manager with entity manager and default scale
+    // also sets up a static camera for rendering the map if needed
     public MapManager(EntityManager entityManager) {
         this.map_scale = 1.0f;
         this.entityManager = entityManager;
@@ -37,6 +39,7 @@ public class MapManager implements Disposable {
     }
     
     public TiledMap getMap() {
+        // return the current map
         return this.map;
     }
 
@@ -76,6 +79,7 @@ public class MapManager implements Disposable {
         this.staticCam.update();
     }
 
+    // dispose of map resources
     public void dispose() {
         if (renderer != null) renderer.dispose();
     }
