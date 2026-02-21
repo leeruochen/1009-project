@@ -2,6 +2,8 @@ package github.com_1009project.abstractEngine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Collections;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,6 +17,7 @@ public class EntityManager{
 
     private final List<Entity> entities = new ArrayList<>();
     private final List<Entity> toRemove = new ArrayList<>();
+    private final Map<String, Entity> persistentEntities = new HashMap<>();
 
     private final EntityFactory factory;
 
@@ -31,10 +34,17 @@ public class EntityManager{
     }
 
     public Entity createEntity(MapObject object, float map_scale, Entity existingPlayer) {
-        Entity entity = factory.createEntity(object, map_scale, existingPlayer);
+        Entity entity = factory.createEntity(object, map_scale, persistentEntities);
 
         if (entity != null && !entities.contains(entity)) {
             entities.add(entity);
+            // Track persistent entities by their type for reuse on map load
+            if (entity.getPersistent()) {
+                String type = object.getProperties().get("type", String.class);
+                if (type != null) {
+                    persistentEntities.put(type, entity);
+                }
+            }
         }
         return entity;
     }
@@ -71,6 +81,11 @@ public class EntityManager{
     // getter for entities
     public List<Entity> getEntities() {
         return Collections.unmodifiableList(entities);
+    }
+
+    // getter for persistent entities map
+    public Map<String, Entity> getPersistentEntities() {
+        return persistentEntities;
     }
 
     public void dispose() {

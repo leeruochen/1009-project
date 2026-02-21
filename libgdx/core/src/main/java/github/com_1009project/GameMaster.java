@@ -157,14 +157,11 @@ public class GameMaster extends ApplicationAdapter{
     // this method is used to load a new map, it clears the current entities and loads the new map's entities
     // used when transitioning between maps, the player entity will have a variable that specifies which map to load, and when the variable is not null, this method will be called with the new map name
     private void loadMap(String mapName) {
-        // Keep reference to player before disposing
-        Entity existingPlayer = player;
-        
         entityManager.dispose();
 
         mapManager.setMap(assetManager.get(mapName, TiledMap.class));
         System.out.println("Loaded map: " + mapName);
-        mapManager.loadEntities(existingPlayer);
+        mapManager.loadEntities();
 
         camera.setTarget(player);
     }

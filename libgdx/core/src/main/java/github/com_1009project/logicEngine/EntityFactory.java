@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import github.com_1009project.abstractEngine.Entity;
 
 import com.badlogic.gdx.assets.AssetManager;
+import java.util.Map;
 
 public class EntityFactory {
 
@@ -27,7 +28,7 @@ public class EntityFactory {
         }
     }
 
-    public Entity createEntity(MapObject object, float mapScale, Entity existingPlayer) {
+    public Entity createEntity(MapObject object, float mapScale, Map<String, Entity> persistentEntities) {
         String type = object.getProperties().get("type", String.class);
         Entity entity = null;
 
@@ -45,15 +46,17 @@ public class EntityFactory {
             type = "CollisionBox"; // default to CollisionBox if no type is specified
         }
 
+        // Check if a persistent entity of this type already exists and reuse it
+        if (persistentEntities.containsKey(type)) {
+            entity = persistentEntities.get(type);
+            entity.setPosition(x, y);
+            entity.setSize(width, height);
+            entity.setPersistent(true);
+            return entity;
+        }
 
         switch (type) {
             case "Player":
-                if ("Player".equals(type) && existingPlayer != null) {
-                existingPlayer.setPosition(rect.x * mapScale, rect.y * mapScale);
-                existingPlayer.setSize(rect.width * mapScale, rect.height * mapScale);
-                return existingPlayer;
-                } 
-
                 entity = new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
                 break;
 
@@ -73,7 +76,24 @@ public class EntityFactory {
                 break;
         }
 
+        // Mark entity as persistent or non-persistent based on PersistentEntityType configuration
+        if (entity != null) {
+            entity.setPersistent(isPersistentType(type));
+        }
+
         System.out.println("Created entity of type: " + type);
         return entity;
+    }
+
+    /**
+     * Checks if an entity type is configured as persistent
+     */
+    private boolean isPersistentType(String type) {
+        try {
+            PersistentEntityType.valueOf(type);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }

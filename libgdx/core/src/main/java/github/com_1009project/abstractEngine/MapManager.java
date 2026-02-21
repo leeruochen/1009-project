@@ -58,12 +58,12 @@ public class MapManager implements Disposable {
     }
 
     // load entities from map objects
-    public void loadEntities(Entity existingPlayer) {
+    public void loadEntities() {
         Iterable<MapLayer> mapLayers = map.getLayers();
         
         for (MapLayer layer : mapLayers) {
             for (MapObject object : layer.getObjects()) {
-                entityManager.createEntity(object, map_scale, existingPlayer);
+                entityManager.createEntity(object, map_scale, null); // null is ignored; persistent entities handled internally
             }
         }
     }
