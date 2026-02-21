@@ -1,6 +1,5 @@
 package github.com_1009project.logicEngine;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -8,12 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import github.com_1009project.abstractEngine.Entity;
 
-import com.badlogic.gdx.Input;
-
 public class testEntity extends Entity {
     public boolean hasCollided = false; // Flag for camera shake
     private Texture texture;
     public String mapToLoad = null;
+    public Door nearbyDoor = null;
 
     public testEntity(float x, float y, float w, float h, Texture texture) {
         super();
@@ -30,6 +28,7 @@ public class testEntity extends Entity {
 
     @Override
     public void updateMovement(float deltaTime) {
+        nearbyDoor = null; // reset each frame; onCollision will set it if overlapping
         Vector2 vel = this.getMovementComponent().getVelocity();
         float playerMaxSpd = this.getMovementComponent().getMaxSpeed();
         
@@ -54,12 +53,7 @@ public class testEntity extends Entity {
 
         if (playerRect.overlaps(otherRect)) {
             if (other instanceof Door) {
-                if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                    String dest = ((Door) other).getDestination();
-                    if (dest != null && !dest.isEmpty()) {
-                        this.mapToLoad = dest; // Set the map to load
-                    }
-                }
+                nearbyDoor = (Door) other;
             }
             else if (other instanceof CollisionBox) {
                 this.setPosition(this.getPreviousPosition().x, this.getPreviousPosition().y);

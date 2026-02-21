@@ -6,8 +6,10 @@ import java.util.Map;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import github.com_1009project.logicEngine.Door;
 import github.com_1009project.logicEngine.PauseScene;
 import github.com_1009project.logicEngine.TestScene;
+import github.com_1009project.logicEngine.testEntity;
 
 public class SceneManager implements EventObserver {
     private Map<Integer, Scene> scenes = new HashMap<>();
@@ -16,7 +18,6 @@ public class SceneManager implements EventObserver {
     private EntityManager entityManager;
     private EventManager eventManager;
     private SpriteBatch batch;
-    private boolean interactPressed = false;
     private int previousSceneId = 1; // Default to main game
 
     public SceneManager(AssetManager resourceManager, EntityManager entityManager, EventManager eventManager, SpriteBatch batch) {
@@ -112,19 +113,21 @@ public class SceneManager implements EventObserver {
     public void changeScene(Entity entity, Event event, boolean isUp) {
         if (entity == null) return;
 
-        // Update input state
         if (!isUp) { // Key Pressed
-            switch (event) {
-                case PlayerInteract:
-                    // Handle interaction logic here if needed // testinggggggggggggggggggg
-                    interactPressed = true;
-                    break;
+            if (event == Event.PlayerInteract) {
+                if (entity instanceof testEntity) {
+                    testEntity player = (testEntity) entity;
+                    Door door = player.nearbyDoor;
+                    if (door != null) {
+                        String dest = door.getDestination();
+                        if (dest != null && !dest.isEmpty()) {
+                            player.mapToLoad = dest;
+                        }
+                    }
+                }
             }
         } else { // Key Released
-            switch (event) {
-                case PlayerInteract:
-                    interactPressed = false;
-                    break;
+            if (event == Event.PlayerInteract) {
             }
         }
     }

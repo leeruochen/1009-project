@@ -40,9 +40,6 @@ public class MapManager implements Disposable {
         return this.map;
     }
 
-    public void update(float deltaTime) {
-    }
-
     // render static map
     public void render() {
         if (renderer == null) return;
