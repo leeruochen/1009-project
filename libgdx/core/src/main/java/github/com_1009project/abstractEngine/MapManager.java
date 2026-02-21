@@ -60,7 +60,7 @@ public class MapManager implements Disposable {
         
         for (MapLayer layer : mapLayers) {
             for (MapObject object : layer.getObjects()) {
-                entityManager.createEntity(object, map_scale, null); // null is ignored; persistent entities handled internally
+                entityManager.createEntity(object, map_scale);
             }
         }
     }
