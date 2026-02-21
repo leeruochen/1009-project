@@ -45,42 +45,35 @@ public class EntityFactory {
             type = "CollisionBox"; // default to CollisionBox if no type is specified
         }
 
-        if ("Player".equals(type) && existingPlayer != null) {
-            existingPlayer.setPosition(rect.x * mapScale, rect.y * mapScale);
-            existingPlayer.setSize(rect.width * mapScale, rect.height * mapScale);
-            return existingPlayer;
-        } else {
-            switch (type) {
-                case "Player":
-                    if ("Player".equals(type) && existingPlayer != null) {
-                    existingPlayer.setPosition(rect.x * mapScale, rect.y * mapScale);
-                    existingPlayer.setSize(rect.width * mapScale, rect.height * mapScale);
-                    return existingPlayer;
-                    } else {
-                        entity = new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
-                    }
-                    
-                    System.out.println("Creating entity of type: " + type);
-                    break;
 
-                case "Door":
-                    entity = new Door(x, y, width, height);
-                    if (object.getProperties().containsKey("targetMap")) {
-                        ((Door) entity).setDestination(object.getProperties().get("targetMap", String.class));
-                    }
-                    System.out.println("Creating entity of type: " + type);
-                    break;
+        switch (type) {
+            case "Player":
+                if ("Player".equals(type) && existingPlayer != null) {
+                existingPlayer.setPosition(rect.x * mapScale, rect.y * mapScale);
+                existingPlayer.setSize(rect.width * mapScale, rect.height * mapScale);
+                return existingPlayer;
+                } 
 
-                case "CollisionBox":
-                    entity = new CollisionBox(x, y, width, height);
-                    System.out.println("Creating entity of type: " + type);
-                    break;
-                // Add cases for other entity types as needed
-                default:
-                    System.out.println("Unknown entity type: " + type);
-                    break;
-            }
+                entity = new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
+                break;
+
+            case "Door":
+                entity = new Door(x, y, width, height);
+                if (object.getProperties().containsKey("targetMap")) {
+                    ((Door) entity).setDestination(object.getProperties().get("targetMap", String.class));
+                }
+                break;
+
+            case "CollisionBox":
+                entity = new CollisionBox(x, y, width, height);
+                break;
+            // Add cases for other entity types as needed
+            default:
+                System.out.println("Unknown entity type: " + type);
+                break;
         }
+
+        System.out.println("Created entity of type: " + type);
         return entity;
     }
 }
