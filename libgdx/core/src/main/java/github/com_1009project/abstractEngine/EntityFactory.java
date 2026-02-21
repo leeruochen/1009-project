@@ -1,12 +1,9 @@
-package github.com_1009project.logicEngine;
+package github.com_1009project.abstractEngine;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
-
-import github.com_1009project.abstractEngine.Entity;
-
 import com.badlogic.gdx.assets.AssetManager;
 import java.util.Map;
 
