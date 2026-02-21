@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 public class CollisionManager implements Disposable {
+    // spatial hash grid for efficient collision detection
     private SpatialHashGrid grid;
 
     public CollisionManager(int cellSize) {
@@ -42,6 +43,7 @@ public class CollisionManager implements Disposable {
         }
     }
 
+    // dispose data structure
     public void dispose() {
         grid.dispose();
     }
