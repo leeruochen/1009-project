@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.Gdx;
 //https://libgdx.com/wiki/graphics/2d/tile-maps
 
-public class MapManager extends Layer implements Disposable {
+public class MapManager implements Disposable {
 
     private EntityManager entityManager;
     private TiledMap map;

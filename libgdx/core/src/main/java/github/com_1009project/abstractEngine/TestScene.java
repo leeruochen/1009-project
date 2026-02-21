@@ -13,7 +13,6 @@ public class TestScene extends Scene {
     @Override
     public void init() {
         super.init(); // adds BackgroundLayer, EntityLayer, UILayer
-        layers.add(new MapManager(entityManager)); // add map manager too
         System.out.println("TestScene initialized");
     }
 
