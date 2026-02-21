@@ -1,7 +1,11 @@
-package github.com_1009project.abstractEngine;
+package github.com_1009project.logicEngine;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import github.com_1009project.abstractEngine.EntityManager;
+import github.com_1009project.abstractEngine.EventManager;
+import github.com_1009project.abstractEngine.Scene;
 
 public class TestScene extends Scene {
     public TestScene(int id, AssetManager resourceManager,

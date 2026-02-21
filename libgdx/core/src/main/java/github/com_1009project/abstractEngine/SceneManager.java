@@ -6,6 +6,9 @@ import java.util.Map;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import github.com_1009project.logicEngine.PauseScene;
+import github.com_1009project.logicEngine.TestScene;
+
 public class SceneManager implements EventObserver {
     private Map<Integer, Scene> scenes = new HashMap<>();
     private Scene currentScene;

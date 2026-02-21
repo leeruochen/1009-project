@@ -21,7 +21,7 @@ public class CollisionComponent {
         this.offsetY = offsetY;
     }
 
-    protected void updateBounds(Vector2 position) { 
+    public void updateBounds(Vector2 position) { 
         // update the bounding rectangle based on the entity's position and size
         this.bounds.setPosition(position.x + this.offsetX, position.y + this.offsetY);
     }

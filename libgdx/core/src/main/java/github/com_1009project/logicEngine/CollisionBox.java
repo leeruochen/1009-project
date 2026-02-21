@@ -1,6 +1,8 @@
-package github.com_1009project.abstractEngine;
+package github.com_1009project.logicEngine;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import github.com_1009project.abstractEngine.Entity;
 
 // simple collision box entity
 public class CollisionBox extends Entity {

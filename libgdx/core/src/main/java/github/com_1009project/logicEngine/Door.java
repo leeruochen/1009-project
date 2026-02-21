@@ -1,5 +1,6 @@
-package github.com_1009project.abstractEngine;
+package github.com_1009project.logicEngine;
 
+import github.com_1009project.abstractEngine.Entity;
 
 public class Door extends CollisionBox {
     private String destination;

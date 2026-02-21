@@ -1,4 +1,4 @@
-package github.com_1009project.abstractEngine;
+package github.com_1009project.logicEngine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -11,6 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import github.com_1009project.abstractEngine.EntityManager;
+import github.com_1009project.abstractEngine.EventManager;
+import github.com_1009project.abstractEngine.Scene;
+import github.com_1009project.abstractEngine.SceneManager;
+import github.com_1009project.abstractEngine.UILayer;
 
 public class PauseScene extends Scene {
     private SceneManager sceneManager;

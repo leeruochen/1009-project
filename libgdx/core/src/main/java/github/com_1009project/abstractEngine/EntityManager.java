@@ -8,6 +8,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 
+import github.com_1009project.logicEngine.EntityFactory;
+import github.com_1009project.logicEngine.EntityType;
+
 public class EntityManager{
 
     private final List<Entity> entities = new ArrayList<>();

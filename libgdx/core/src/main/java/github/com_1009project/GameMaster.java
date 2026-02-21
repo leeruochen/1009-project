@@ -14,12 +14,12 @@ import github.com_1009project.abstractEngine.CollisionManager;
 import github.com_1009project.abstractEngine.MapManager;
 import github.com_1009project.abstractEngine.EntityManager;
 import github.com_1009project.abstractEngine.Entity;
-import github.com_1009project.abstractEngine.testEntity;
 import github.com_1009project.abstractEngine.EventManager;
 import github.com_1009project.abstractEngine.MovementManager;
-import github.com_1009project.abstractEngine.PauseScene;
 import github.com_1009project.abstractEngine.SceneManager;
 import github.com_1009project.abstractEngine.UIFactory;
+import github.com_1009project.logicEngine.PauseScene;
+import github.com_1009project.logicEngine.testEntity;
 import github.com_1009project.abstractEngine.Event;
 import com.badlogic.gdx.Input;
 
