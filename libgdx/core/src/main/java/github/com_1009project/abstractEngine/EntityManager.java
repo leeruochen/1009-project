@@ -33,6 +33,7 @@ public class EntityManager{
         return entity;
     }
 
+    // Creates an entity from a TiledMap MapObject, adds it to the manager, and returns it
     public Entity createEntity(MapObject object, float map_scale) {
         Entity entity = factory.createEntity(object, map_scale, persistentEntities);
 
@@ -88,6 +89,7 @@ public class EntityManager{
         return persistentEntities;
     }
 
+    // Disposes of all non-persistent entities and clears the manager
     public void dispose() {
         for (Entity entity : entities) {
             if (!entity.getPersistent()) {
@@ -96,6 +98,8 @@ public class EntityManager{
         }
         processRemovals();
     }
+
+    // Renders all active entities using the provided SpriteBatch
     public void render(SpriteBatch batch) {
 		for (Entity entity : entities) {
 			if (entity.isActive()) {

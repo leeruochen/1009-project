@@ -18,6 +18,7 @@ public class EntityFactory {
         this.assetManager = assetManager;
     }
 
+    // Creates a new entity of the specified type
     public Entity createEntity(EntityType type) {
         switch (type) {
             // Add cases for other entity types as needed
@@ -28,6 +29,7 @@ public class EntityFactory {
         }
     }
 
+    // Create an entity using TiledMap MapObject properties, with support for persistent entities
     public Entity createEntity(MapObject object, float mapScale, Map<String, Entity> persistentEntities) {
         String type = object.getProperties().get("type", String.class);
         Entity entity = null;
@@ -55,6 +57,7 @@ public class EntityFactory {
             return entity;
         }
 
+        // Create new entity based on type
         switch (type) {
             case "Player":
                 entity = new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
@@ -85,9 +88,8 @@ public class EntityFactory {
         return entity;
     }
 
-    /**
-     * Checks if an entity type is configured as persistent
-     */
+
+    // Checks if an entity type is configured as persistent
     private boolean isPersistentType(String type) {
         try {
             PersistentEntityType.valueOf(type);
