@@ -22,8 +22,6 @@ public class EntityFactory {
     public Entity createEntity(EntityType type) {
         switch (type) {
             // Add cases for other entity types as needed
-            case Player:
-                return new testEntity(200, 200, 50, 50, assetManager.get("imgs/boy_down_1.png", Texture.class));
             default:
                 return null;
         }
@@ -43,11 +41,6 @@ public class EntityFactory {
         float width = rect.width * mapScale;
         float height = rect.height * mapScale;
 
-        // Demo code as most of the map objects do not have classes
-        if (type == null){
-            type = "CollisionBox"; // default to CollisionBox if no type is specified
-        }
-
         // Check if a persistent entity of this type already exists and reuse it
         if (persistentEntities.containsKey(type)) {
             entity = persistentEntities.get(type);
@@ -59,21 +52,12 @@ public class EntityFactory {
 
         // Create new entity based on type
         switch (type) {
-            case "Player":
-                entity = new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
-                break;
-
-            case "Door":
-                entity = new Door(x, y, width, height);
-                if (object.getProperties().containsKey("targetMap")) {
-                    ((Door) entity).setDestination(object.getProperties().get("targetMap", String.class));
-                }
-                break;
-
-            case "CollisionBox":
-                entity = new CollisionBox(x, y, width, height);
-                break;
             // Add cases for other entity types as needed
+            // e.g. if you have a "Player" type, you would create and return a new PlayerEntity here
+            // case "Player":
+            //     entity = new testEntity(x, y, width, height, assetManager.get("imgs/boy_down_1.png", Texture.class));
+            //     break;
+            // Default case
             default:
                 System.out.println("Unknown entity type: " + type);
                 break;
@@ -89,7 +73,7 @@ public class EntityFactory {
     }
 
 
-    // Checks if an entity type is configured as persistent
+    // Checks if an entity type is configured as persistent. Use PersistentEntityType enum to define which types are persistent.
     private boolean isPersistentType(String type) {
         try {
             PersistentEntityType.valueOf(type);
