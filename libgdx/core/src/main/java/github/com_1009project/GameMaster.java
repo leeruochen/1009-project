@@ -73,18 +73,7 @@ public class GameMaster extends ApplicationAdapter{
         mapManager = new MapManager(entityManager);
         mapManager.setScale(4.0f); 
         loadMap("maps/test.tmx");
-        
-        sm = new SceneManager(assetManager, entityManager, eventManager, batch);
 
-        // example of creating an entity and making it the target of the camera
-        // this makes the camera follow the player entity
-        for (Entity entity : entityManager.getEntities()) {
-            if (entity instanceof testEntity) {
-                player = (testEntity) entity;
-                break;
-            }
-        }
-        camera.setTarget(player);
         sm.loadScene(1);
 
         //eventmanager adds movementManager as an event observer
@@ -163,6 +152,13 @@ public class GameMaster extends ApplicationAdapter{
         System.out.println("Loaded map: " + mapName);
         mapManager.loadEntities();
 
+        // find player entity and set camera target to player.
+        for (Entity entity : entityManager.getEntities()) {
+            if (entity instanceof testEntity) {
+                player = (testEntity) entity;
+                break;
+            }
+        }
         camera.setTarget(player);
     }
 
